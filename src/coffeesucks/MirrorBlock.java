@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package coffeesucks;
+ 
 
 import java.awt.*;
 import java.awt.geom.Rectangle2D;
@@ -104,12 +104,20 @@ public class MirrorBlock extends GameObject {
        // }
        
        goal = isWin;
-       goalDir = winDir;
        
       retL = new ImageIcon(pathRL).getImage();
         retR = new ImageIcon(pathRR).getImage();
         retU = new ImageIcon(pathRU).getImage();
         retD = new ImageIcon(pathRD).getImage();
+        
+        if (sprite_index == s_DL)
+            goalDir = 2;
+        if (sprite_index == s_DR)
+            goalDir = 1;
+        if (sprite_index == s_UR)
+            goalDir = 1;
+        if (sprite_index == s_UL)
+            goalDir = 2;
         
         if (goal){
             if (goalDir ==1){
@@ -131,7 +139,7 @@ public class MirrorBlock extends GameObject {
     public void clicked() {
         if (!inTransit) {
             if (!selected) {
-                if (!goal){
+               if (!goal){
                 playSound(snd_spin, false);
 
                 if (sprite_index == s_DR) {
@@ -144,6 +152,29 @@ public class MirrorBlock extends GameObject {
                     sprite_index = s_DR;
                 }
                 }
+                if (sprite_index == s_DL)
+            goalDir = 2;
+        if (sprite_index == s_DR)
+            goalDir = 1;
+        if (sprite_index == s_UR)
+            goalDir = 1;
+        if (sprite_index == s_UL)
+            goalDir = 2;
+        
+        if (goal){
+            if (goalDir ==1){
+                topSpr = retL;
+            }
+            if (goalDir ==2){
+                topSpr = retR;
+            }
+            if (goalDir ==3){
+                topSpr = retU;
+            }
+            if (goalDir ==4){
+                topSpr = retD;
+            }
+        }
             }
 
             }

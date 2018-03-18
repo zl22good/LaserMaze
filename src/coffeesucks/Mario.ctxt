@@ -1,0 +1,22 @@
+#BlueJ class context
+comment0.target=Mario
+comment0.text=\r\n\r\n\ @author\ Mike\r\n
+comment1.params=spr\ myX\ myY
+comment1.target=Mario(java.awt.Image,\ int,\ int)
+comment2.params=myX\ myY
+comment2.target=Mario(int,\ int)
+comment3.params=e
+comment3.target=void\ keyPressed(java.awt.event.KeyEvent)
+comment4.params=e
+comment4.target=void\ keyReleased(java.awt.event.KeyEvent)
+comment5.params=e
+comment5.target=void\ keyTyped(java.awt.event.KeyEvent)
+comment6.params=
+comment6.target=void\ colEvent()
+comment7.params=
+comment7.target=java.lang.String\ toString()
+comment8.params=
+comment8.target=void\ clicked()
+comment9.params=
+comment9.target=void\ rClicked()
+numComments=10

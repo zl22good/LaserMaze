@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package coffeesucks;
+ 
 
 import java.awt.Image;
 import java.awt.geom.Rectangle2D;
@@ -65,27 +65,18 @@ public SplitMirror(int myX, int myY){
     }
 
     public String toString() {
-        return "wut";
+       if (HIT){
+           return "oof " + createNew; 
+       }
+       else
+           return "wait no " + createNew;
     }
 
     public void colEvent() {
         for (GameObject curr : cols) {
             if (curr instanceof Laser) {
+               
                 HIT = true;
-                
-                if(curr.vspeed > 0 ){
-                    createNew = "D";
-                }
-                if(curr.vspeed < 0 ){
-                    createNew = "U";
-                }
-                if(curr.hspeed > 0 ){
-                    createNew = "R";
-                }
-                if(curr.hspeed < 0 ){
-                    createNew = "L";
-                }
-                
             }
         }
     }

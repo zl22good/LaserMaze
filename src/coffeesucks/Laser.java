@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package coffeesucks;
+ 
 
 import java.awt.*;
 import java.awt.geom.Rectangle2D;
@@ -67,7 +67,7 @@ public class Laser extends GameObject {
         return r;
     }
 
-    public void step(){
+    public void step() {
 
         //make moves
         if (this.vspeed != 0) {
@@ -81,26 +81,26 @@ public class Laser extends GameObject {
         this.tripCheck();
         //check collisions
         this.colEvent();
-        debugData = (x + ", " + y + ", " + (x+hitboxWidth) + ", " + (y+hitboxHeight) + ", " + hitboxWidth + ", " + hitboxHeight );
-        mask =  new Rectangle2D.Double(x+xoffset,y+yoffset,hitboxWidth,hitboxHeight);
-        int newX = x+(hitboxWidth/2);
-        int newY = y+(hitboxHeight/2);
-        smallmask = new Rectangle2D.Double(x+28,y+28,10,10);
+        debugData = (x + ", " + y + ", " + (x + hitboxWidth) + ", " + (y + hitboxHeight) + ", " + hitboxWidth + ", " + hitboxHeight);
+        mask = new Rectangle2D.Double(x + xoffset, y + yoffset, hitboxWidth, hitboxHeight);
+        int newX = x + (hitboxWidth / 2);
+        int newY = y + (hitboxHeight / 2);
+        smallmask = new Rectangle2D.Double(x + 28, y + 28, 10, 10);
     }
-    
-    
+
     public void colEvent() {
         if (visible) {
             for (GameObject curr : smallcols) {
                 if (curr instanceof WinBlock) {
+                    if (((WinBlock) curr).active) {
                         playSound(snd_win, false);
                         jumpX(-999);
                         vspeed = 0;
                         hspeed = 0;
                     }
-                
-                   
-               /* if (curr instanceof WinBlock) {
+                }
+
+                /* if (curr instanceof WinBlock) {
                     if (((WinBlock) curr).isHit() == false) {
                         
                         if (((WinBlock) curr).whichDir() == 1) {
@@ -133,7 +133,7 @@ public class Laser extends GameObject {
                         }
                     }
                     }
-*/
+                 */
                 if (curr instanceof MirrorBlock) {
                     if (((MirrorBlock) curr).isHit() == false) {
                         playSound(snd_reflect, false);
@@ -143,8 +143,7 @@ public class Laser extends GameObject {
                                 sprite_index = s_vert;
 
                                 setVSpeed(-1 * speed);
-                            } 
-                            else if (vspeed > 0) {
+                            } else if (vspeed > 0) {
                                 setHSpeed(-1 * speed);
                                 sprite_index = s_hori;
 
@@ -210,129 +209,142 @@ public class Laser extends GameObject {
                                 setVSpeed(0);
                             }
                         }
-                        
+
                     }
                 }
-                
-                    if (curr instanceof DoubleMirror) {
-                        if (((DoubleMirror) curr).isHit() == false) {
-                            playSound(snd_reflect, false);
-                            if (((DoubleMirror) curr).myNumber() == 1) {
-                                if (hspeed > 0) {
-                                    setHSpeed(0);
-                                    sprite_index = s_vert;
 
-                                    setVSpeed(1 * speed);
-                                } else if (hspeed < 0) {
-                                    setHSpeed(0);
-                                    sprite_index = s_vert;
+                if (curr instanceof DoubleMirror) {
+                    if (((DoubleMirror) curr).isHit() == false) {
+                        playSound(snd_reflect, false);
+                        if (((DoubleMirror) curr).myNumber() == 1) {
+                            if (hspeed > 0) {
+                                setHSpeed(0);
+                                sprite_index = s_vert;
 
-                                    setVSpeed(-1 * speed);
-                                } else if (vspeed < 0) {
-                                    setHSpeed(-1 * speed);
-                                    sprite_index = s_hori;
+                                setVSpeed(1 * speed);
+                            } else if (hspeed < 0) {
+                                setHSpeed(0);
+                                sprite_index = s_vert;
 
-                                    setVSpeed(0);
-                                } else if (vspeed > 0) {
-                                    setHSpeed(1 * speed);
-                                    sprite_index = s_hori;
+                                setVSpeed(-1 * speed);
+                            } else if (vspeed < 0) {
+                                setHSpeed(-1 * speed);
+                                sprite_index = s_hori;
 
-                                    setVSpeed(0);
-                                } else {
-                                    setHSpeed(0);
-                                    visible = false;
-                                    setVSpeed(0);
-                                }
+                                setVSpeed(0);
+                            } else if (vspeed > 0) {
+                                setHSpeed(1 * speed);
+                                sprite_index = s_hori;
+
+                                setVSpeed(0);
+                            } else {
+                                setHSpeed(0);
+                                visible = false;
+                                setVSpeed(0);
                             }
-                            if (((DoubleMirror) curr).myNumber() == 2) {
-                                if (hspeed > 0) {
-                                    setHSpeed(0);
-                                    sprite_index = s_vert;
+                        }
+                        if (((DoubleMirror) curr).myNumber() == 2) {
+                            if (hspeed > 0) {
+                                setHSpeed(0);
+                                sprite_index = s_vert;
 
-                                    setVSpeed(-1 * speed);
-                                } else if (hspeed < 0) {
-                                    setHSpeed(0);
-                                    sprite_index = s_vert;
+                                setVSpeed(-1 * speed);
+                            } else if (hspeed < 0) {
+                                setHSpeed(0);
+                                sprite_index = s_vert;
 
-                                    setVSpeed(1 * speed);
-                                } else if (vspeed < 0) {
-                                    setHSpeed(1 * speed);
-                                    sprite_index = s_hori;
+                                setVSpeed(1 * speed);
+                            } else if (vspeed < 0) {
+                                setHSpeed(1 * speed);
+                                sprite_index = s_hori;
 
-                                    setVSpeed(0);
-                                } else if (vspeed > 0) {
-                                    setHSpeed(-1 * speed);
-                                    sprite_index = s_hori;
+                                setVSpeed(0);
+                            } else if (vspeed > 0) {
+                                setHSpeed(-1 * speed);
+                                sprite_index = s_hori;
 
-                                    setVSpeed(0);
-                                } else {
-                                    setHSpeed(0);
-                                    visible = false;
-                                    setVSpeed(0);
-                                }
+                                setVSpeed(0);
+                            } else {
+                                setHSpeed(0);
+                                visible = false;
+                                setVSpeed(0);
                             }
                         }
                     }
-                    if (curr instanceof SplitMirror) {
-                        if (((SplitMirror) curr).isHit() == false) {
-                            playSound(snd_reflect, false);
-                            if (((SplitMirror) curr).myNumber() == 1) {
-                                if (hspeed > 0) {
-                                    setHSpeed(0);
-                                    sprite_index = s_vert;
+                }
+                if (curr instanceof SplitMirror) {
+                    if (((SplitMirror) curr).isHit() == false) {
+                        playSound(snd_reflect, false);
+                        if (this.vspeed > 0) {
+                            ((SplitMirror)curr).createNew = "D";
+                        }
+                        if (this.vspeed < 0) {
+                            ((SplitMirror)curr).createNew = "U";
+                        }
+                        if (this.hspeed > 0) {
+                            ((SplitMirror)curr).createNew= "R";
+                        }
+                        if (this.hspeed < 0) {
+                            ((SplitMirror)curr).createNew = "L";
+                        }
+                        if (((SplitMirror) curr).myNumber() == 1) {
+                            if (hspeed > 0) {
+                                setHSpeed(0);
+                                sprite_index = s_vert;
 
-                                    setVSpeed(1 * speed);
-                                } else if (hspeed < 0) {
-                                    setHSpeed(0);
-                                    sprite_index = s_vert;
+                                setVSpeed(1 * speed);
+                            } else if (hspeed < 0) {
+                                setHSpeed(0);
+                                sprite_index = s_vert;
 
-                                    setVSpeed(-1 * speed);
-                                } else if (vspeed < 0) {
-                                    setHSpeed(-1 * speed);
-                                    sprite_index = s_hori;
+                                setVSpeed(-1 * speed);
+                            } else if (vspeed < 0) {
+                                setHSpeed(-1 * speed);
+                                sprite_index = s_hori;
 
-                                    setVSpeed(0);
-                                } else if (vspeed > 0) {
-                                    setHSpeed(1 * speed);
-                                    sprite_index = s_hori;
+                                setVSpeed(0);
+                            } else if (vspeed > 0) {
+                                setHSpeed(1 * speed);
+                                sprite_index = s_hori;
 
-                                    setVSpeed(0);
-                                } else {
-                                    setHSpeed(0);
-                                    visible = false;
-                                    setVSpeed(0);
-                                }
-                            }
-                            if (((SplitMirror) curr).myNumber() == 2) {
-                                if (hspeed > 0) {
-                                    setHSpeed(0);
-                                    sprite_index = s_vert;
-
-                                    setVSpeed(-1 * speed);
-                                } else if (hspeed < 0) {
-                                    setHSpeed(0);
-                                    sprite_index = s_vert;
-
-                                    setVSpeed(1 * speed);
-                                } else if (vspeed < 0) {
-                                    setHSpeed(1 * speed);
-                                    sprite_index = s_hori;
-
-                                    setVSpeed(0);
-                                } else if (vspeed > 0) {
-                                    setHSpeed(-1 * speed);
-                                    sprite_index = s_hori;
-
-                                    setVSpeed(0);
-                                } else {
-                                    setHSpeed(0);
-                                    visible = false;
-                                    setVSpeed(0);
-                                }
+                                setVSpeed(0);
+                            } else {
+                                setHSpeed(0);
+                                visible = false;
+                                setVSpeed(0);
                             }
                         }
+                        if (((SplitMirror) curr).myNumber() == 2) {
+                            if (hspeed > 0) {
+                                setHSpeed(0);
+                                sprite_index = s_vert;
+
+                                setVSpeed(-1 * speed);
+                            } else if (hspeed < 0) {
+                                setHSpeed(0);
+                                sprite_index = s_vert;
+
+                                setVSpeed(1 * speed);
+                            } else if (vspeed < 0) {
+                                setHSpeed(1 * speed);
+                                sprite_index = s_hori;
+
+                                setVSpeed(0);
+                            } else if (vspeed > 0) {
+                                setHSpeed(-1 * speed);
+                                sprite_index = s_hori;
+
+                                setVSpeed(0);
+                            } else {
+                                setHSpeed(0);
+                                visible = false;
+                                setVSpeed(0);
+                            }
+                        }
+                        
                     }
                 }
             }
         }
     }
+}

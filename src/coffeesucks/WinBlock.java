@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package coffeesucks;
+ 
 
 import java.awt.*;
 import java.awt.geom.Rectangle2D;
@@ -57,7 +57,7 @@ public class WinBlock extends GameObject {
     }
 
     public String toString() {
-        if (!HIT) {
+        if (!active) {
             return "VIRGIN";
         } else {
             return "OOF";
@@ -65,6 +65,17 @@ public class WinBlock extends GameObject {
     }
 
     public void colEvent() {
+        active = false;
+        
+        for (GameObject curr : cols) {
+            if (curr instanceof MirrorBlock) {
+                if (((MirrorBlock)curr).goal){
+                    active = true;
+                }
+            }
+            
+
+        }
         for (GameObject curr : cols) {
             if (active){
             if (curr instanceof Laser) {
@@ -72,13 +83,7 @@ public class WinBlock extends GameObject {
             }
             }
         }
-        for (GameObject curr : cols) {
-            if (curr instanceof MirrorBlock) {
-                if (((MirrorBlock)curr).goal){
-                    active = true;
-                }
-            }
-        }
+        
     }
 
     public int getID() {
