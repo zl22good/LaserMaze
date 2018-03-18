@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
- 
+package coffeesucks;
 import java.awt.*;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.*;
@@ -42,11 +42,6 @@ public class BoundingBox extends GameObject{
     }
     
      public void colEvent() {
-        for (GameObject curr : smallcols) {
-            if (curr instanceof Laser) {
-                HIT = true;
-            }
-    }
     }
     
     public int getID(){

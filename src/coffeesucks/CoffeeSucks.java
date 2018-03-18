@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
- 
+package coffeesucks;
 
 import java.util.ArrayList;
 import java.awt.*;
@@ -184,6 +184,19 @@ public class CoffeeSucks extends JPanel implements ActionListener, MouseListener
 
         LaserBlock l1 = new LaserBlock(points.get(6)[0], points.get(6)[1], "D", true, 7);
         board[1][1] = 14;
+        
+        BoundingBox topbb = new BoundingBox(0, 180,2000,30);
+        objs.add(topbb);
+        
+        BoundingBox botbb = new BoundingBox(0, 573,2000,30);
+        objs.add(botbb);
+        
+        BoundingBox leftbb = new BoundingBox(34, 0,14,2000);
+        objs.add(leftbb);
+        
+        BoundingBox rightbb = new BoundingBox(418, 0,14,2000);
+        objs.add(rightbb);
+        
 
         nextPoint = points.get(6);
 
@@ -299,7 +312,7 @@ public class CoffeeSucks extends JPanel implements ActionListener, MouseListener
         lv2objs.add(mb2);
         board[3][1] = 1;
         
-        LaserBlock l1 = new LaserBlock(points.get(0)[0], points.get(0)[1], "D", true, 1);
+        LaserBlock l1 = new LaserBlock(points.get(0)[0], points.get(0)[1], "R", true, 1);
         board[0][0] = 14;
         
         MirrorBlock mb3 = new MirrorBlock(26, 108, "DR", false, 19,true,1);
@@ -310,6 +323,18 @@ public class CoffeeSucks extends JPanel implements ActionListener, MouseListener
         
         WinBlock wb2 = new WinBlock(344, points.get(9)[1],10,64);
         lv2objs.add(wb2);
+        
+        BoundingBox topbb = new BoundingBox(0, 180,2000,30);
+        lv2objs.add(topbb);
+        
+        BoundingBox botbb = new BoundingBox(0, 573,2000,30);
+        lv2objs.add(botbb);
+        
+        BoundingBox leftbb = new BoundingBox(34, 0,14,2000);
+        lv2objs.add(leftbb);
+        
+        BoundingBox rightbb = new BoundingBox(418, 0,14,2000);
+        lv2objs.add(rightbb);
         
         nextPoint = points.get(0);
 
@@ -681,6 +706,23 @@ public class CoffeeSucks extends JPanel implements ActionListener, MouseListener
             
             }
         
+        }
+        for (GameObject curr : lv2objs) {
+            if (curr instanceof Laser) {
+              if (((Laser)curr).explode){
+                  ((Laser)curr).explode = false;
+                  lv2objs.add(new Explosion(((Laser)curr).colX, ((Laser)curr).colY));
+              }  
+            }
+        }
+        
+        for (GameObject curr : objs) {
+            if (curr instanceof Laser) {
+              if (((Laser)curr).explode){
+                  ((Laser)curr).explode = false;
+                  objs.add(new Explosion(((Laser)curr).colX, ((Laser)curr).colY));
+              }  
+            }
         }
         
         if (currentRoom.equals("Beginner"))
@@ -1128,6 +1170,11 @@ public class CoffeeSucks extends JPanel implements ActionListener, MouseListener
                             }
 
                         }
+                        for (GameObject curr4 : objs) {
+                            if (curr4 instanceof Explosion) {
+                                curr4.visible = false;
+                        }
+                    }
                     }
                 }
             }
@@ -1451,14 +1498,18 @@ public class CoffeeSucks extends JPanel implements ActionListener, MouseListener
                                 curr3.vspeed = 0;
 
                             }
-
+                            for (GameObject curr4 : lv2objs) {
+                            if (curr4 instanceof Explosion) {
+                                curr4.visible = false;
                         }
                     }
                 }
             }
         }
-
     }
+        }
+    }
+        
 
     public int[] getID(int ID) {
         int[] p = new int[2];

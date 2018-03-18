@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
- 
+package coffeesucks;
 
 import java.awt.*;
 import java.awt.geom.Rectangle2D;
@@ -25,14 +25,21 @@ public class Laser extends GameObject {
     String pathH = (dir + "\\lasermaze\\laserhori.png");
     Image s_vert;
     String pathV = (dir + "\\lasermaze\\laservert.png");
+    
+    Image s_vertoff;
+    String pathVOFF = (dir + "\\lasermaze\\laserreflectrightup.png");
     String snd_reflect = (dir + "\\lasermaze\\reflect.wav");
     String snd_win = (dir + "\\lasermaze\\win.wav");
     int speed;
+    boolean explode = false;
+    int colX = 0;
+    int colY = 0;
 
     public Laser(int myX, int myY, int H, int V, int s) {
 
         s_hori = new ImageIcon(pathH).getImage();
         s_vert = new ImageIcon(pathV).getImage();
+        s_vertoff = new ImageIcon(pathVOFF).getImage();
         x = myX;
         y = myY;
         hspeed = H;
@@ -93,6 +100,7 @@ public class Laser extends GameObject {
             for (GameObject curr : smallcols) {
                 if (curr instanceof WinBlock) {
                     if (((WinBlock) curr).active) {
+                        explode = false;
                         playSound(snd_win, false);
                         jumpX(-999);
                         vspeed = 0;
@@ -140,7 +148,7 @@ public class Laser extends GameObject {
                         if (((MirrorBlock) curr).myNumber() == 1) {
                             if (hspeed > 0) {
                                 setHSpeed(0);
-                                sprite_index = s_vert;
+                                sprite_index = s_vertoff;
 
                                 setVSpeed(-1 * speed);
                             } else if (vspeed > 0) {
@@ -150,6 +158,9 @@ public class Laser extends GameObject {
                                 setVSpeed(0);
                             } else {
                                 setHSpeed(0);
+                                explode = true;
+                    colX = x;
+                    colY = y;
                                 jumpX(-100);
                                 visible = false;
                                 setVSpeed(0);
@@ -168,6 +179,9 @@ public class Laser extends GameObject {
                                 setVSpeed(0);
                             } else {
                                 setHSpeed(0);
+                                explode = true;
+                    colX = x;
+                    colY = y;
                                 jumpX(-100);
                                 visible = false;
                                 setVSpeed(0);
@@ -176,7 +190,7 @@ public class Laser extends GameObject {
                         if (((MirrorBlock) curr).myNumber() == 3) {
                             if (hspeed > 0) {
                                 setHSpeed(0);
-                                sprite_index = s_vert;
+                                sprite_index = s_vertoff;
 
                                 setVSpeed(speed);
                             } else if (vspeed < 0) {
@@ -186,6 +200,9 @@ public class Laser extends GameObject {
                                 setVSpeed(0);
                             } else {
                                 setHSpeed(0);
+                                explode = true;
+                    colX = x;
+                    colY = y;
                                 jumpX(-100);
                                 visible = false;
                                 setVSpeed(0);
@@ -204,6 +221,9 @@ public class Laser extends GameObject {
                                 setVSpeed(0);
                             } else {
                                 setHSpeed(0);
+                                explode = true;
+                    colX = x;
+                    colY = y;
                                 jumpX(-100);
                                 visible = false;
                                 setVSpeed(0);
@@ -219,7 +239,7 @@ public class Laser extends GameObject {
                         if (((DoubleMirror) curr).myNumber() == 1) {
                             if (hspeed > 0) {
                                 setHSpeed(0);
-                                sprite_index = s_vert;
+                                sprite_index = s_vertoff;
 
                                 setVSpeed(1 * speed);
                             } else if (hspeed < 0) {
@@ -239,6 +259,10 @@ public class Laser extends GameObject {
                                 setVSpeed(0);
                             } else {
                                 setHSpeed(0);
+                                explode = true;
+                    colX = x;
+                    colY = y;
+                                jumpX(-100);
                                 visible = false;
                                 setVSpeed(0);
                             }
@@ -246,7 +270,7 @@ public class Laser extends GameObject {
                         if (((DoubleMirror) curr).myNumber() == 2) {
                             if (hspeed > 0) {
                                 setHSpeed(0);
-                                sprite_index = s_vert;
+                                sprite_index = s_vertoff;
 
                                 setVSpeed(-1 * speed);
                             } else if (hspeed < 0) {
@@ -266,6 +290,10 @@ public class Laser extends GameObject {
                                 setVSpeed(0);
                             } else {
                                 setHSpeed(0);
+                                explode = true;
+                    colX = x;
+                    colY = y;
+                                jumpX(-100);
                                 visible = false;
                                 setVSpeed(0);
                             }
@@ -276,21 +304,21 @@ public class Laser extends GameObject {
                     if (((SplitMirror) curr).isHit() == false) {
                         playSound(snd_reflect, false);
                         if (this.vspeed > 0) {
-                            ((SplitMirror)curr).createNew = "D";
+                            ((SplitMirror) curr).createNew = "D";
                         }
                         if (this.vspeed < 0) {
-                            ((SplitMirror)curr).createNew = "U";
+                            ((SplitMirror) curr).createNew = "U";
                         }
                         if (this.hspeed > 0) {
-                            ((SplitMirror)curr).createNew= "R";
+                            ((SplitMirror) curr).createNew = "R";
                         }
                         if (this.hspeed < 0) {
-                            ((SplitMirror)curr).createNew = "L";
+                            ((SplitMirror) curr).createNew = "L";
                         }
                         if (((SplitMirror) curr).myNumber() == 1) {
                             if (hspeed > 0) {
                                 setHSpeed(0);
-                                sprite_index = s_vert;
+                                sprite_index = s_vertoff;
 
                                 setVSpeed(1 * speed);
                             } else if (hspeed < 0) {
@@ -310,6 +338,10 @@ public class Laser extends GameObject {
                                 setVSpeed(0);
                             } else {
                                 setHSpeed(0);
+                                explode = true;
+                    colX = x;
+                    colY = y;
+                                jumpX(-100);
                                 visible = false;
                                 setVSpeed(0);
                             }
@@ -317,7 +349,7 @@ public class Laser extends GameObject {
                         if (((SplitMirror) curr).myNumber() == 2) {
                             if (hspeed > 0) {
                                 setHSpeed(0);
-                                sprite_index = s_vert;
+                                sprite_index = s_vertoff;
 
                                 setVSpeed(-1 * speed);
                             } else if (hspeed < 0) {
@@ -337,14 +369,28 @@ public class Laser extends GameObject {
                                 setVSpeed(0);
                             } else {
                                 setHSpeed(0);
+                                explode = true;
+                    colX = x;
+                    colY = y;
+                                jumpX(-100);
                                 visible = false;
                                 setVSpeed(0);
                             }
                         }
-                        
+
                     }
+                }
+                if (curr instanceof BoundingBox) {
+                    setHSpeed(0);
+                    explode = true;
+                    colX = x;
+                    colY = y;
+                    jumpX(-100);
+                    visible = false;
+                    setVSpeed(0);
                 }
             }
         }
     }
 }
+
