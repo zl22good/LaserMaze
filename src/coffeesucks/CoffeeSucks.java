@@ -545,7 +545,7 @@ public class CoffeeSucks extends JPanel implements ActionListener, MouseListener
         //String s = score + "";
         //g.drawString(s, 60, 60);
         
-        g.drawString("HARD", 100, 660);
+        g.drawString("HARD", 22, 660);
         //the magic line. This draws every object in the objs array
         for (GameObject curr : lv2objs) {
                 if (curr instanceof SplitMirror) {
