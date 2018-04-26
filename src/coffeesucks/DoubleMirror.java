@@ -11,10 +11,10 @@ import javax.swing.ImageIcon;
 
 /**
  *
- * @author Mike
+ * @author Mike, Zach, Luis, Cassie, Grace
  */
-public class DoubleMirror extends GameObject {
-
+public class DoubleMirror extends GameObject 
+{
     Image s_L;
     String pathL = (dir + "\\lasermaze\\doublemirrorL.png");
     Image s_Lb;
@@ -29,20 +29,35 @@ public class DoubleMirror extends GameObject {
     boolean HIT = false;
     String myString;
 
-    public DoubleMirror(int myX, int myY, String d, boolean l, int myID) {
-        if (!l) {
+    /**
+     * 
+     * @param myX
+     * @param myY
+     * @param d
+     * @param l
+     * @param myID 
+     */
+    public DoubleMirror(int myX, int myY, String d, boolean l, int myID) 
+    {
+        if (!l) 
+        {
 
             s_L = new ImageIcon(pathL).getImage();
             s_R = new ImageIcon(pathR).getImage();
-        } else {
+        } 
+        else 
+        {
             s_L = new ImageIcon(pathLb).getImage();
             s_R = new ImageIcon(pathRb).getImage();
         }
         sprite_index = s_L;
 
-        if (d.equals("L")) {
+        if (d.equals("L")) 
+        {
             sprite_index = s_L;
-        } else if (d.equals("R")) {
+        } 
+        else if (d.equals("R")) 
+        {
             sprite_index = s_R;
         }
 
@@ -60,61 +75,106 @@ public class DoubleMirror extends GameObject {
         myString = d;
     }
 
-    public void clicked() {
-        if (!inTransit) {
-            if (!selected) {
+    /**
+     * 
+     */
+    public void clicked() 
+    {
+        if (!inTransit) 
+        {
+            if (!selected) 
+            {
                 playSound(snd_spin, false);
 
-                if (sprite_index == s_R) {
+                if (sprite_index == s_R) 
+                {
                     sprite_index = s_L;
-                } else if (sprite_index == s_L) {
+                } 
+                else if (sprite_index == s_L) 
+                {
                     sprite_index = s_R;
-
                 }
             }
         }
     }
 
-    public void rClicked() {
+    /**
+     * 
+     */
+    public void rClicked() 
+    {
         playSound(snd_lift, false);
     }
 
-    public String toString() {
+    public String toString() 
+    {
         return "wut";
     }
 
-    public void colEvent() {
-        for (GameObject curr : cols) {
-            if (curr instanceof Laser) {
+    /**
+     * 
+     */
+    public void colEvent() 
+    {
+        for (GameObject curr : cols) 
+        {
+            if (curr instanceof Laser) 
+            {
                 HIT = true;
             }
         }
     }
 
-    public int getID() {
+    /**
+     * 
+     * @return 
+     */
+    public int getID() 
+    {
         return ID;
     }
 
-    public void setID(int i) {
+    /**
+     * 
+     * @param i 
+     */
+    public void setID(int i) 
+    {
         ID = i;
     }
 
-    public boolean isHit() {
+    /**
+     * 
+     * @return 
+     */
+    public boolean isHit() 
+    {
         return HIT;
     }
 
-    public void setHit(boolean h) {
+    /**
+     * 
+     * @param h 
+     */
+    public void setHit(boolean h) 
+    {
         HIT = h;
     }
 
-    public int myNumber() {
-        if (sprite_index == s_L) {
+    /**
+     * 
+     * @return 
+     */
+    public int myNumber() 
+    {
+        if (sprite_index == s_L) 
+        {
             return 1;
         }
-        if (sprite_index == s_R) {
+        if (sprite_index == s_R) 
+        {
             return 2;
         }
         return 0;
     }
-
 }

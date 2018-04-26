@@ -12,14 +12,14 @@ import javax.swing.ImageIcon;
 
 /**
  *
- * @author Mike
+ * @author Mike, Zach, Luis, Cassie, Grace
  */
-public class Block extends GameObject {
-    
+public class Block extends GameObject 
+{
     Image s_block;
     
-     public Block(int myX,int myY){
-       
+    public Block(int myX,int myY)
+    {
         String path= (dir + "\\art\\sprites\\block.gif");
         s_block = new ImageIcon(path).getImage();
         sprite_index = s_block;
@@ -27,13 +27,30 @@ public class Block extends GameObject {
         y= myY;
         hitboxHeight = 100; 
         hitboxWidth = 100;
-       mask =  new Rectangle2D.Double(x,y,hitboxWidth,hitboxHeight);
-       smallmask =  new Rectangle2D.Double(x,y,hitboxWidth,hitboxHeight);
+        mask =  new Rectangle2D.Double(x,y,hitboxWidth,hitboxHeight);
+        smallmask =  new Rectangle2D.Double(x,y,hitboxWidth,hitboxHeight);
     }
-     public void colEvent(){
-         
+    
+    /**
+     * 
+     */
+     public void colEvent()
+     {
      }
+     
+     /**
+      * 
+      * @return 
+      */
      public String toString(){return "null";}
+     
+     /**
+      * 
+      */
      public void clicked(){}
+     
+     /**
+      * 
+      */
      public void rClicked(){}
 }

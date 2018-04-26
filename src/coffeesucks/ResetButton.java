@@ -11,16 +11,22 @@ import javax.swing.ImageIcon;
 
 /**
  *
- * @author Mike
+ * @author Mike, Zach, Luis, Cassie, Grace
  */
-public class ResetButton extends GameObject {
-     String bg_music = dir + "\\lasermaze\\bg.wav";
+public class ResetButton extends GameObject 
+{
+    String bg_music = dir + "\\lasermaze\\bg.wav";
     Image s_firebutton;
     String pathFB = (dir + "\\lasermaze\\reset.png");
     String snd_reset = (dir+ "\\lasermaze\\reset.wav");
     
-    
-    public ResetButton(int myX, int myY){
+    /**
+     * 
+     * @param myX
+     * @param myY 
+     */
+    public ResetButton(int myX, int myY)
+    {
         s_firebutton = new ImageIcon(pathFB).getImage();
         sprite_index = s_firebutton;
         x = myX;
@@ -31,12 +37,28 @@ public class ResetButton extends GameObject {
         smallmask =  new Rectangle2D.Double(x,y,hitboxWidth,hitboxHeight);
     }
     
-    public void clicked(){
+    /**
+     * 
+     */
+    public void clicked()
+    {
         playSound(snd_reset,false);
     }
-    public String toString(){return x+ " " + y;}
-    public void colEvent(){}
-    public void rClicked(){}
     
+    /**
+     * 
+     * @return 
+     */
+    public String toString(){return x+ " " + y;}
+    
+    /**
+     * 
+     */
+    public void colEvent(){}
+    
+    /**
+     * 
+     */
+    public void rClicked(){} 
 }
 

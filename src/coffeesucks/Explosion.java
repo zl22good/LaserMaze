@@ -11,15 +11,21 @@ import javax.swing.ImageIcon;
 
 /**
  *
- * @author Mike
+ * @author Mike, Zach, Luis, Cassie, Grace
  */
-public class Explosion extends GameObject{
-    
+public class Explosion extends GameObject
+{
     Image s_boom;
     String pathFB = (dir + "\\lasermaze\\boom.png");
     String snd_boom = (dir+ "\\lasermaze\\explode.wav");
     
-    public Explosion(int myX, int myY){
+    /**
+     * 
+     * @param myX
+     * @param myY 
+     */
+    public Explosion(int myX, int myY)
+    {
         s_boom = new ImageIcon(pathFB).getImage();
         sprite_index = s_boom;
         x = myX;
@@ -31,18 +37,38 @@ public class Explosion extends GameObject{
         playSound(snd_boom,false);
     }
     
-    public void clicked(){
+    /**
+     * 
+     */
+    public void clicked()
+    {
     }
+    
+    /**
+     * 
+     * @return 
+     */
     public String toString(){return x+ " " + y;}
-    public void colEvent(){
-    if (visible) {
-            for (GameObject curr : cols) {
-                if (curr instanceof WinBlock) {
+    
+    /**
+     * 
+     */
+    public void colEvent()
+    {
+        if (visible) 
+        {
+            for (GameObject curr : cols) 
+            {
+                if (curr instanceof WinBlock) 
+                {
                     visible = false;
                 }
             }
+        }
     }
-    }
-    public void rClicked(){}
     
+    /**
+     * 
+     */
+    public void rClicked(){}
 }

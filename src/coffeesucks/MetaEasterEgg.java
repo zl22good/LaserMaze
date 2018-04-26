@@ -11,15 +11,21 @@ import javax.swing.ImageIcon;
 
 /**
  *
- * @author Mike
+ * @author Mike, Zach, Luis, Cassie, Grace
  */
-public class MetaEasterEgg extends GameObject {
-    
-     String snd_select = dir + "\\lasermaze\\select.wav";
+public class MetaEasterEgg extends GameObject 
+{
+    String snd_select = dir + "\\lasermaze\\select.wav";
     Image s_button;
     String pathb1 = (dir + "\\lasermaze\\meta.png");
    
-    public MetaEasterEgg(int myX, int myY){
+    /**
+     * 
+     * @param myX
+     * @param myY 
+     */
+    public MetaEasterEgg(int myX, int myY)
+    {
         s_button = new ImageIcon(pathb1).getImage();
         sprite_index = s_button;
         x = myX;
@@ -30,11 +36,28 @@ public class MetaEasterEgg extends GameObject {
         smallmask =  new Rectangle2D.Double(x,y,hitboxWidth,hitboxHeight);
     }
     
-    public void clicked(){
+    /**
+     * 
+     */
+    public void clicked()
+    {
         playSound(snd_select,false);
     }
+    
+    /**
+     * 
+     * @return 
+     */
     public String toString(){return "";}
+    
+    /**
+     * 
+     */
     public void colEvent(){}
+    
+    /**
+     * 
+     */
     public void rClicked(){}
 }
   

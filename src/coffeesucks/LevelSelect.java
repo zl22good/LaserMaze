@@ -11,11 +11,10 @@ import javax.swing.ImageIcon;
 
 /**
  *
- * @author Mike
+ * @author Mike, Zach, Luis, Cassie, Grace
  */
-public class LevelSelect extends GameObject {
-    
-    
+public class LevelSelect extends GameObject 
+{
     String snd_select = dir + "\\lasermaze\\select.wav";
     String snd_menu = dir + "\\lasermaze\\menu.wav";
     Image s_card1;
@@ -24,16 +23,23 @@ public class LevelSelect extends GameObject {
     String pathc2 = (dir + "\\lasermaze\\card2.png");
     int level;
     
-    
-    public LevelSelect(int myX, int myY,int levelNum){ 
-
+    /**
+     * 
+     * @param myX
+     * @param myY
+     * @param levelNum 
+     */
+    public LevelSelect(int myX, int myY,int levelNum)
+    { 
         s_card1 = new ImageIcon(pathc1).getImage();
         s_card2 = new ImageIcon(pathc2).getImage();
-        if (levelNum == 1){
-        sprite_index = s_card1;
+        if (levelNum == 1)
+        {
+            sprite_index = s_card1;
         }
-        if (levelNum == 2){
-        sprite_index = s_card2;
+        if (levelNum == 2)
+        {
+            sprite_index = s_card2;
         }
         x = myX;
         y = myY;
@@ -43,11 +49,28 @@ public class LevelSelect extends GameObject {
         level = levelNum;
     }
     
-    public void clicked(){
+    /**
+     * 
+     */
+    public void clicked()
+    {
         playSound(snd_select,false);
         stopSound(snd_select);
     }
+    
+    /**
+     * 
+     * @return 
+     */
     public String toString(){return ""+ level;}
+    
+    /**
+     * 
+     */
     public void colEvent(){}
+    
+    /**
+     * 
+     */
     public void rClicked(){}
 }

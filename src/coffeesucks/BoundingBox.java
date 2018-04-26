@@ -14,14 +14,22 @@ import javax.swing.ImageIcon;
 import java.awt.Image;
 /**
  *
- * @author Mike
+ * @author Mike, Zach, Luis, Cassie, Grace
  */
-public class BoundingBox extends GameObject{
-   
+public class BoundingBox extends GameObject
+{
     boolean HIT;
     int ID ;
     
-    public BoundingBox(int x1, int y1, int xw, int yh){
+    /**
+     * 
+     * @param x1
+     * @param y1
+     * @param xw
+     * @param yh 
+     */
+    public BoundingBox(int x1, int y1, int xw, int yh)
+    {
         HIT = false;
         x = x1;
         y = y1;
@@ -31,32 +39,67 @@ public class BoundingBox extends GameObject{
         mask = new Rectangle2D.Double(x, y, hitboxWidth, hitboxHeight);
     }
     
+    /**
+     * 
+     */
      public void clicked() {}
-          
          
-     public void rClicked() {
-    }
+     /**
+      * 
+      */
+     public void rClicked() 
+     {
+     }
 
-    public String toString() {
+     /**
+      * 
+      * @return 
+      */
+    public String toString() 
+    {
         return x + " " + y;
     }
     
-     public void colEvent() {
+    /**
+     * 
+     */
+    public void colEvent() 
+    {
     }
     
-    public int getID(){
+    /**
+     * 
+     * @return 
+     */
+    public int getID()
+    {
         return ID;
     }
     
-    public void setID(int i){
+    /**
+     * 
+     * @param i 
+     */
+    public void setID(int i)
+    {
         ID = i;
     }
     
-    public boolean isHit(){
+    /**
+     * 
+     * @return 
+     */
+    public boolean isHit()
+    {
         return HIT;
     }
     
-    public void setHit(boolean h){
+    /**
+     * 
+     * @param h 
+     */
+    public void setHit(boolean h)
+    {
         HIT = h;
     }
 }

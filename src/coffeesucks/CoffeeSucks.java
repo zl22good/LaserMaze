@@ -22,23 +22,23 @@ import javax.sound.sampled.Clip;
 
 /**
  *
- * @author Mike TERMINOLOGY GUIDE ROOM describes the current window being used
- * and drawn PARENTS are abstracts or interfaces.
+ * @author Mike, Zach, Luis, Cassie, Grace
  */
-public class CoffeeSucks extends JPanel implements ActionListener, MouseListener {
-
-    Dimension screenSize = new Dimension(470, 715); //set screen size (locked)
-    int FPS = 60; //default is 30,  you can change it but it WILL effect your whole game
+public class CoffeeSucks extends JPanel implements ActionListener, 
+        MouseListener 
+{
+    Dimension screenSize = new Dimension(470, 715); 
+    int FPS = 60; 
     private final Timer timer = new Timer(FPS, this);
-    Image ROOM_BACKGROUND = null; //define this for your room, this is the drawn background and should match the dimensions above
-    private long totalTime; //all related to framerate
+    Image ROOM_BACKGROUND = null; 
+    private long totalTime; 
     private long averageTime;
     private int frameCount;
     static String dir = System.getProperty("user.dir");
     ArrayList<GameObject> objs = new ArrayList<>();
     ArrayList<GameObject> titleobjs = new ArrayList<>();
     ArrayList<GameObject> lv2objs = new ArrayList<>();
-    Font customFont; //Name all your fonts here, set them in the constructor
+    Font customFont; 
     Font bigFont;
     ArrayList<int[]> points = new ArrayList<int[]>();
     int[][] board = new int[5][5];
@@ -67,15 +67,22 @@ public class CoffeeSucks extends JPanel implements ActionListener, MouseListener
     String snd_sd = (dir + "\\lasermaze\\sd.wav");
     boolean easterSD = false;
     
-    public CoffeeSucks() throws FontFormatException, IOException {
-        //custom font stuff
+    /**
+     * 
+     * @throws FontFormatException
+     * @throws IOException 
+     */
+    public CoffeeSucks() throws FontFormatException, IOException 
+    {
         String fontpath = dir + "\\lasermaze\\pdark.ttf";
-        customFont = Font.createFont(Font.TRUETYPE_FONT, new File(fontpath)).deriveFont(12f);
+        customFont = Font.createFont(Font.TRUETYPE_FONT, 
+                new File(fontpath)).deriveFont(12f);
         bigFont = customFont.deriveFont(24f);
-        GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
-        ge.registerFont(Font.createFont(Font.TRUETYPE_FONT, new File(fontpath)));
+        GraphicsEnvironment ge = 
+                GraphicsEnvironment.getLocalGraphicsEnvironment();
+        ge.registerFont(Font.createFont(Font.TRUETYPE_FONT, 
+                new File(fontpath)));
 
-        //LASER MAZE STARTS HERE
         int[] p1 = new int[]{57, 222};
         int[] p2 = new int[]{129, 222};
         int[] p3 = new int[]{201, 222};
@@ -130,59 +137,62 @@ public class CoffeeSucks extends JPanel implements ActionListener, MouseListener
         
         s_tar = new ImageIcon(pathtar).getImage();
 
-        for (int i = 0; i < 5; i++) {
-            for (int j = 0; j < 5; j++) {
+        for (int i = 0; i < 5; i++) 
+        {
+            for (int j = 0; j < 5; j++) 
+            {
                 board[i][j] = 0;
             }
         }
 
     }
-
+   
     /**
-     * @param args the command line arguments
+     * 
+     * @param args
+     * @throws FontFormatException
+     * @throws IOException 
      */
-    public static void main(String[] args) throws FontFormatException, IOException {
+    public static void main(String[] args) throws FontFormatException, 
+            IOException 
+    {
         CoffeeSucks game = new CoffeeSucks();
         String snd_menu = dir + "\\lasermaze\\menu.wav";
-        //game.playSound(snd_menu,true);
         mainObj = game;
         game.titleScreen();
-
     }
 
-    public void beginnerRoom() {
-
-        JFrame frame = new JFrame("Laser Maze - powered by CoffeeSucksEngine 0.3");
+    /**
+     * 
+     */
+    public void beginnerRoom() 
+    {
+        JFrame frame = new JFrame("Laser Maze - powered "
+                + "by CoffeeSucksEngine 0.3");
         currentFrame = frame;
         currentRoom = "Beginner";
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); //what do we do on close?
-        frame.add(this); //makes the paintComponent add
-        frame.setResizable(false); //locks size
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); 
+        frame.add(this); 
+        frame.setResizable(false); 
         frame.requestFocus();
         frame.toFront();
 
-        //add objects 
         FireButton firebutton = new FireButton(360, 625);
         ResetButton reset = new ResetButton(290, 625);
         MenuButton mb = new MenuButton(220, 625);
 
-        /**
-         * 0 is a blank spot 1 is UL mirror 2 is UR mirror 3 is DL mirror 4 is
-         * DR mirror 11 is L laser 12 is R laser 13 is U laser 14 is D laser 20
-         * is a win block
-         */
-        MirrorBlock mb1 = new MirrorBlock(points.get(18)[0], points.get(18)[1], "DR", true, 19,true, 1);
+        
+        MirrorBlock mb1 = new MirrorBlock(points.get(18)[0], 
+                points.get(18)[1], "DR", true, 19,true, 1);
         WinBlock wb1 = new WinBlock(267, points.get(18)[1],10,64);
-        //MirrorBlock mb3 = new MirrorBlock(points.get(19)[0], points.get(19)[1], "DR", false, 20,false,0);
-        //board[4][3] = 4;
-        //objs.add(mb3);
         board[3][3] = 4;
         
 
         DoubleMirror mb2 = new DoubleMirror(26, 108, "R", false, 19);
         objs.add(mb2);
 
-        LaserBlock l1 = new LaserBlock(points.get(6)[0], points.get(6)[1], "D", true, 7);
+        LaserBlock l1 = new LaserBlock(points.get(6)[0], points.get(6)[1],
+                "D", true, 7);
         board[1][1] = 14;
         
         BoundingBox topbb = new BoundingBox(0, 180,2000,30);
@@ -262,9 +272,10 @@ public class CoffeeSucks extends JPanel implements ActionListener, MouseListener
         objs.add(s24);
         objs.add(s25);
 
-        //have after all board changes
-        for (int i = 0; i < 5; i++) {
-            for (int j = 0; j < 5; j++) {
+        for (int i = 0; i < 5; i++) 
+        {
+            for (int j = 0; j < 5; j++) 
+            {
                 original_board[i][j] = board[i][j];
             }
         }
@@ -274,45 +285,45 @@ public class CoffeeSucks extends JPanel implements ActionListener, MouseListener
         score = 0;
         fired = false;
 
-        //set background
-        //frame.addKeyListener(p1); //every object with inputs needs this
         frame.addMouseListener(this);
-        frame.setSize(screenSize); //sets size
+        frame.setSize(screenSize); 
         frame.setVisible(true);
 
         timer.start();
     }
     
-     public void interRoom() {
+    /**
+     * 
+     */
+     public void interRoom() 
+     {
 
-        JFrame frame = new JFrame("Laser Maze - powered by CoffeeSucksEngine 0.3");
+        JFrame frame = new JFrame("Laser Maze - powered by "
+                + "CoffeeSucksEngine 0.3");
         currentFrame = frame;
         currentRoom = "Inter";
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); //what do we do on close?
-        frame.add(this); //makes the paintComponent add
-        frame.setResizable(false); //locks size
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); 
+        frame.add(this);
+        frame.setResizable(false); 
         frame.requestFocus();
         frame.toFront();
 
-        //add objects 
         FireButton firebutton = new FireButton(360, 625);
         ResetButton reset = new ResetButton(290, 625);
         MenuButton mb = new MenuButton(220, 625);
 
-        /**
-         * 0 is a blank spot 1 is UL mirror 2 is UR mirror 3 is DL mirror 4 is
-         * DR mirror 11 is L laser 12 is R laser 13 is U laser 14 is D laser 20
-         * is a win block
-         */
-        MirrorBlock mb1 = new MirrorBlock(points.get(4)[0], points.get(4)[1], "DR", true, 5,true, 1);
+        MirrorBlock mb1 = new MirrorBlock(points.get(4)[0], points.get(4)[1],
+                "DR", true, 5,true, 1);
         WinBlock wb1 = new WinBlock(344, points.get(4)[1],10,64);
         board[4][0] = 4;
         
-        DoubleMirror mb2 = new DoubleMirror(points.get(8)[0], points.get(8)[1], "R", true, 9);
+        DoubleMirror mb2 = new DoubleMirror(points.get(8)[0], points.get(8)[1], 
+                "R", true, 9);
         lv2objs.add(mb2);
         board[3][1] = 1;
         
-        LaserBlock l1 = new LaserBlock(points.get(0)[0], points.get(0)[1], "R", true, 1);
+        LaserBlock l1 = new LaserBlock(points.get(0)[0], points.get(0)[1], 
+                "R", true, 1);
         board[0][0] = 14;
         
         MirrorBlock mb3 = new MirrorBlock(26, 108, "DR", false, 19,true,1);
@@ -338,7 +349,6 @@ public class CoffeeSucks extends JPanel implements ActionListener, MouseListener
         
         nextPoint = points.get(0);
 
-        //adds spaces
         Spaces s1 = new Spaces(points.get(0)[0], points.get(0)[1], 1);
         Spaces s2 = new Spaces(points.get(1)[0], points.get(1)[1], 2);
         Spaces s3 = new Spaces(points.get(2)[0], points.get(2)[1], 3);
@@ -400,9 +410,10 @@ public class CoffeeSucks extends JPanel implements ActionListener, MouseListener
         lv2objs.add(s24);
         lv2objs.add(s25);
 
-        //have after all board changes
-        for (int i = 0; i < 5; i++) {
-            for (int j = 0; j < 5; j++) {
+        for (int i = 0; i < 5; i++) 
+        {
+            for (int j = 0; j < 5; j++) 
+            {
                 original_board[i][j] = board[i][j];
             }
         }
@@ -412,35 +423,40 @@ public class CoffeeSucks extends JPanel implements ActionListener, MouseListener
         score = 0;
         fired = false;
 
-        //set background
-        //frame.addKeyListener(p1); //every object with inputs needs this
         frame.addMouseListener(this);
-        frame.setSize(screenSize); //sets size
+        frame.setSize(screenSize); 
         frame.setVisible(true);
 
         timer.start();
     }
 
-     public void titleScreen() {
-
-        JFrame title = new JFrame("Laser Maze - powered by CoffeeSucksEngine 0.3");
+     /**
+      * 
+      */
+     public void titleScreen() 
+     {
+        JFrame title = new JFrame("Laser Maze - powered by "
+                + "CoffeeSucksEngine 0.3");
         currentFrame = title;
         currentRoom = "title";
-        title.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); //what do we do on close?
-        title.add(this); //makes the paintComponent add
-        title.setResizable(false); //locks size
+        title.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); 
+        title.add(this); 
+        title.setResizable(false); 
         title.requestFocus();
         title.toFront();
-        //set background
-        
-        for (int i = 0; i < 5; i++) {
-            for (int j = 0; j < 5; j++) {
+       
+        for (int i = 0; i < 5; i++) 
+        {
+            for (int j = 0; j < 5; j++) 
+            {
                 board[i][j] = 0;
             }
         }
         
-        for (int i = 0; i < 5; i++) {
-            for (int j = 0; j < 5; j++) {
+        for (int i = 0; i < 5; i++) 
+        {
+            for (int j = 0; j < 5; j++) 
+            {
                 original_board[i][j] = 0;
             }
         }
@@ -456,845 +472,975 @@ public class CoffeeSucks extends JPanel implements ActionListener, MouseListener
         MetaEasterEgg ee1 = new MetaEasterEgg(400,580);
         titleobjs.add(ee1);
         
-        //frame.addKeyListener(p1); //every object with inputs needs this
         title.addMouseListener(this);
-        title.setSize(screenSize); //sets size
+        title.setSize(screenSize); 
         title.setVisible(true);
 
         timer.start();
     }
     
+     /**
+      * 
+      * @param g 
+      */
     @Override
-    protected void paintComponent(Graphics g) {
+    protected void paintComponent(Graphics g) 
+    {
         long start = System.nanoTime();
         super.paintComponent(g);
-        g.setFont(bigFont); // ******************SETS FONT FOR GAME**************
+        g.setFont(bigFont); 
         int width = this.getWidth();
         int height = this.getHeight();
-        g.setColor(Color.white); //BACKGROUND COLOR OF ROOM
+        g.setColor(Color.white); 
         g.fillRect(0, 0, width, height);
-        //the rest of this is frametime stuff, PUT STEPS HERE
-        if (frameCount == FPS) {
+        
+        if (frameCount == FPS) 
+        {
             averageTime = totalTime / FPS;
             totalTime = 0;
             frameCount = 0;
-        } else {
+        } 
+        else 
+        {
             totalTime += System.nanoTime() - start;
             step();
             frameCount++;
         }
         
-        if (currentRoom.equals("Beginner")){
-        //drawing specifc things
-        BufferedImage imgBG = null;
-        String pathBG = (dir + "\\lasermaze\\bg.png");
-        Image coolBG = null;
-        String pathcoolBG = (dir + "\\lasermaze\\codething.gif");
-        try {
-            imgBG = ImageIO.read(new File(pathBG));
-            coolBG = new ImageIcon(pathcoolBG).getImage();
-            setBackground(imgBG);
-        } catch (IOException e) {
-        }
-        g.drawImage(coolBG, -30, 175, this);
-        g.drawImage(ROOM_BACKGROUND, 0, 0, this);
-        String ntar = numTargets + "";
-        g.drawString(ntar, 410, 130);
+        if (currentRoom.equals("Beginner"))
+        {
+            BufferedImage imgBG = null;
+            String pathBG = (dir + "\\lasermaze\\bg.png");
+            Image coolBG = null;
+            String pathcoolBG = (dir + "\\lasermaze\\codething.gif");
+            try 
+            {
+                imgBG = ImageIO.read(new File(pathBG));
+                coolBG = new ImageIcon(pathcoolBG).getImage();
+                setBackground(imgBG);
+            } 
+            catch (IOException e) 
+            {
+            }
+            g.drawImage(coolBG, -30, 175, this);
+            g.drawImage(ROOM_BACKGROUND, 0, 0, this);
+            String ntar = numTargets + "";
+            g.drawString(ntar, 410, 130);
         
-        //String s = score + "";
-        //g.drawString(s, 60, 60);
-        
-        g.drawString("BEGINNER", 42, 660);
-        //the magic line. This draws every object in the objs array
-        for (GameObject curr : objs) {
-                if (curr instanceof WinBlock) {
-                    //g.drawString(curr.toString(),20,20);
+            g.drawString("BEGINNER", 42, 660);
+  
+            for (GameObject curr : objs) 
+            {
+                if (curr instanceof WinBlock) 
+                {
                 }
-        }
-        Graphics2D g2 = (Graphics2D) g;
-        
-        for (GameObject curr : objs) {
-            if (curr.visible) {
-                g.drawImage(curr.sprite_index, curr.x, curr.y, this);
-                g.drawImage(curr.topSpr, curr.x, curr.y, this);
-                //g2.draw(curr.mask);
-
             }
-        }
+            Graphics2D g2 = (Graphics2D) g;
         
-        //g.drawImage (s_tar,268,460,this); //******************************************CHEAP WAY OF DRAWING RETICLE BECAUSE I'M BORED******************
-        
-        }
-        if (currentRoom.equals("Inter")){
-        //drawing specifc things
-        BufferedImage imgBG = null;
-        String pathBG = (dir + "\\lasermaze\\bg.png");
-        Image lv2BG = null;
-        String pathcoolBG = (dir + "\\lasermaze\\level2bg.gif");
-        try {
-            imgBG = ImageIO.read(new File(pathBG));
-            lv2BG = new ImageIcon(pathcoolBG).getImage();
-            setBackground(imgBG);
-        } catch (IOException e) {
-        }
-        g.drawImage(lv2BG, -30, 175, this);
-        g.drawImage(ROOM_BACKGROUND, 0, 0, this);
-        String ntar = numTargets + "";
-        g.drawString(ntar, 410, 130);
-        
-        //String s = score + "";
-        //g.drawString(s, 60, 60);
-        
-        g.drawString("HARD", 22, 660);
-        //the magic line. This draws every object in the objs array
-        for (GameObject curr : lv2objs) {
-                if (curr instanceof SplitMirror) {
-                   //g.drawString(curr.toString(),20,20);
-                }
-        }
-        Graphics2D g2 = (Graphics2D) g;
-        
-        for (GameObject curr : lv2objs) {
-            if (curr.visible) {
-                g.drawImage(curr.sprite_index, curr.x, curr.y, this);
-                g.drawImage(curr.topSpr, curr.x, curr.y, this);
-                //g2.draw(curr.mask);
-
-            }
-        }
-        
-        //g.drawImage (s_tar,268,460,this); //******************************************CHEAP WAY OF DRAWING RETICLE BECAUSE I'M BORED******************
-        
-        }
-        //********************TITLE SCREEN*****************************
-        if (currentRoom.equals("title")){
-        //drawing specifc things
-        BufferedImage imgBG = null;
-        String pathBG = (dir + "\\lasermaze\\bgblank.png");
-        Image coolBG = null;
-        String pathcoolBG = (dir + "\\lasermaze\\codething.gif");
-        try {
-            imgBG = ImageIO.read(new File(pathBG));
-            coolBG = new ImageIcon(pathcoolBG).getImage();
-            setBackground(imgBG);
-        } catch (IOException e) {
-        }
-        g.drawImage(coolBG, -30, 175, this);
-        g.drawImage(ROOM_BACKGROUND, 0, 0, this);
-        g.drawString("WELCOME TO THE MAZE", 42, 660);
-        //the magic line. This draws every object in the objs array
-        for (GameObject curr : titleobjs) {
-            if (curr.visible) {
-                g.drawImage(curr.sprite_index, curr.x, curr.y, this);
-
-            }
-        }
-        
-        }
-        /*
-        if (fired) {
-            for (GameObject curr : objs) {
-                if (curr instanceof LaserBlock) {
-                    if (curr.toString().equals("R")) {
-                        int myID = ((LaserBlock) curr).getID();
-                        nextPoint = getID(myID -1);
-                        nextDir = "R";
-                        g.setColor(Color.red);
-                        Graphics2D g2 = (Graphics2D) g;
-                        g2.setStroke(new BasicStroke(10));
-                        
-                        while (!failCheck){
-                        int firstPointx = nextPoint[0];
-                        int firstPointy = nextPoint[1];
-                        findNext(nextPoint,nextDir);  
-                        g2.draw(new Line2D.Float((float) firstPointx, (float) firstPointy, (float) nextPoint[0], (float) nextPoint[1]));
-                        }
-                    }
+            for (GameObject curr : objs) 
+            {
+                if (curr.visible) 
+                {
+                    g.drawImage(curr.sprite_index, curr.x, curr.y, this);
+                    g.drawImage(curr.topSpr, curr.x, curr.y, this);
                 }
             }
         }
-         */
+        
+        if (currentRoom.equals("Inter"))
+        {
+            BufferedImage imgBG = null;
+            String pathBG = (dir + "\\lasermaze\\bg.png");
+            Image lv2BG = null;
+            String pathcoolBG = (dir + "\\lasermaze\\level2bg.gif");
+            try 
+            {
+                imgBG = ImageIO.read(new File(pathBG));
+                lv2BG = new ImageIcon(pathcoolBG).getImage();
+                setBackground(imgBG);
+            } 
+            catch (IOException e) 
+            {
+            }
+            g.drawImage(lv2BG, -30, 175, this);
+            g.drawImage(ROOM_BACKGROUND, 0, 0, this);
+            String ntar = numTargets + "";
+            g.drawString(ntar, 410, 130);
+        
+            g.drawString("HARD", 22, 660);
+            for (GameObject curr : lv2objs) 
+            {
+                if (curr instanceof SplitMirror) 
+                {
+                }
+            }
+            Graphics2D g2 = (Graphics2D) g;
+        
+            for (GameObject curr : lv2objs) 
+            {
+                if (curr.visible) 
+                {
+                    g.drawImage(curr.sprite_index, curr.x, curr.y, this);
+                    g.drawImage(curr.topSpr, curr.x, curr.y, this);
+                }
+            }
+        
+        }
+        
+        if (currentRoom.equals("title"))
+        {
+            BufferedImage imgBG = null;
+            String pathBG = (dir + "\\lasermaze\\bgblank.png");
+            Image coolBG = null;
+            String pathcoolBG = (dir + "\\lasermaze\\codething.gif");
+            try 
+            {
+                imgBG = ImageIO.read(new File(pathBG));
+                coolBG = new ImageIcon(pathcoolBG).getImage();
+                setBackground(imgBG);
+            } 
+            catch (IOException e) 
+            {
+            }
+            g.drawImage(coolBG, -30, 175, this);
+            g.drawImage(ROOM_BACKGROUND, 0, 0, this);
+            g.drawString("WELCOME TO THE MAZE", 42, 660);
+            for (GameObject curr : titleobjs) 
+            {
+                if (curr.visible) 
+                {
+                    g.drawImage(curr.sprite_index, curr.x, curr.y, this);
+                }
+            }
+        }
     }
 
+    /**
+     * 
+     * @param e 
+     */
     @Override
-    public void actionPerformed(ActionEvent e) {
+    public void actionPerformed(ActionEvent e) 
+    {
         this.repaint();
     }
 
-    public void setBackground(Image bg) {
+    /**
+     * 
+     * @param bg 
+     */
+    public void setBackground(Image bg) 
+    {
         ROOM_BACKGROUND = bg;
     }
 
-    public void step() {
-        for (GameObject curr : objs) {
+    /**
+     * 
+     */
+    public void step() 
+    {
+        for (GameObject curr : objs) 
+        {
             curr.step();
             curr.collisionCheck(objs);
         }
-        for (GameObject curr : lv2objs) {
+        for (GameObject curr : lv2objs) 
+        {
             curr.step();
             curr.collisionCheck(lv2objs);
         }
         
-        for (GameObject curr : objs) {
-            if (curr instanceof Laser) {
-        ((Laser)curr).smallCollisionCheck(objs);
-             curr.collisionCheck(objs);
+        for (GameObject curr : objs) 
+        {
+            if (curr instanceof Laser) 
+            {
+                ((Laser)curr).smallCollisionCheck(objs);
+                curr.collisionCheck(objs);
             }
         }
-        for (GameObject curr : lv2objs) {
-            if (curr instanceof Laser) {
-        ((Laser)curr).smallCollisionCheck(lv2objs);
-             curr.collisionCheck(lv2objs);
+        for (GameObject curr : lv2objs) 
+        {
+            if (curr instanceof Laser) 
+            {
+                ((Laser)curr).smallCollisionCheck(lv2objs);
+                curr.collisionCheck(lv2objs);
             }
         }
         
-        for (GameObject curr : objs) {
-            if (curr instanceof LaserBlock) {
+        for (GameObject curr : objs) 
+        {
+            if (curr instanceof LaserBlock) 
+            {
                 nextDir = curr.toString();
             }
         }
-        for (GameObject curr : lv2objs) {
-            if (curr instanceof LaserBlock) {
+        for (GameObject curr : lv2objs) 
+        {
+            if (curr instanceof LaserBlock) 
+            {
                 nextDir = curr.toString();
             }
         }
-        for (GameObject curr : objs) {
-            if (curr instanceof WinBlock) {
-                if (((WinBlock)curr).addPoint){
+        for (GameObject curr : objs) 
+        {
+            if (curr instanceof WinBlock) 
+            {
+                if (((WinBlock)curr).addPoint)
+                {
                     score++;
                     ((WinBlock)curr).addPoint = false;
                 }
             }
         }
-        for (GameObject curr : lv2objs) {
-            if (curr instanceof WinBlock) {
-                if (((WinBlock)curr).addPoint){
+        for (GameObject curr : lv2objs) 
+        {
+            if (curr instanceof WinBlock) 
+            {
+                if (((WinBlock)curr).addPoint)
+                {
                     score++;
                     ((WinBlock)curr).addPoint = false;
                 }
             }
         }
         
-        for (GameObject curr : lv2objs) {
-            if (curr instanceof SplitMirror) {
-
-                   if (((SplitMirror)curr).createNew.equals("D")){
-                       
-                       lv2objs.add(new Laser(curr.x, curr.y+65, 0, 15, 15));
-                    ((SplitMirror)curr).createNew = "";
-                    
+        for (GameObject curr : lv2objs) 
+        {
+            if (curr instanceof SplitMirror) 
+            {
+                if (((SplitMirror)curr).createNew.equals("D"))
+                {
+                    lv2objs.add(new Laser(curr.x, curr.y+65, 0, 15, 15));
+                    ((SplitMirror)curr).createNew = ""; 
                 } 
-                   if (((SplitMirror)curr).createNew.equals("R")){
-                 
-                       lv2objs.add(new Laser(curr.x, curr.y,15, 0, 15));
+                if (((SplitMirror)curr).createNew.equals("R"))
+                {
+                    lv2objs.add(new Laser(curr.x, curr.y,15, 0, 15));
                     ((SplitMirror)curr).createNew = "";
-                    
                 } 
-                   if (((SplitMirror)curr).createNew.equals("L")){
-                   
-                       lv2objs.add(new Laser(curr.x, curr.y, -15, 0, 15));
-                    ((SplitMirror)curr).createNew = "";
-                    
+                if (((SplitMirror)curr).createNew.equals("L"))
+                {
+                    lv2objs.add(new Laser(curr.x, curr.y, -15, 0, 15));
+                    ((SplitMirror)curr).createNew = "";  
                 } 
-                   if (((SplitMirror)curr).createNew.equals("U")){
-                   
-                       lv2objs.add(new Laser(curr.x, curr.y, 0, -15, 15));
-                    ((SplitMirror)curr).createNew = "";
-                    
+                if (((SplitMirror)curr).createNew.equals("U"))
+                {
+                    lv2objs.add(new Laser(curr.x, curr.y, 0, -15, 15));
+                    ((SplitMirror)curr).createNew = ""; 
                 } 
-                    
-            
             }
-        
         }
-        for (GameObject curr : lv2objs) {
-            if (curr instanceof Laser) {
-              if (((Laser)curr).explode){
-                  ((Laser)curr).explode = false;
-                  lv2objs.add(new Explosion(((Laser)curr).colX, ((Laser)curr).colY));
+        
+        for (GameObject curr : lv2objs) 
+        {
+            if (curr instanceof Laser) 
+            {
+              if (((Laser)curr).explode)
+              {
+                ((Laser)curr).explode = false;
+                lv2objs.add(new Explosion(((Laser)curr).colX, 
+                        ((Laser)curr).colY));
               }  
             }
         }
         
-        for (GameObject curr : objs) {
-            if (curr instanceof Laser) {
-              if (((Laser)curr).explode){
-                  ((Laser)curr).explode = false;
-                  objs.add(new Explosion(((Laser)curr).colX, ((Laser)curr).colY));
-              }  
+        for (GameObject curr : objs) 
+        {
+            if (curr instanceof Laser) 
+            {
+                if (((Laser)curr).explode)
+                {
+                    ((Laser)curr).explode = false;
+                    objs.add(new Explosion(((Laser)curr).colX, 
+                            ((Laser)curr).colY));
+                }  
             }
         }
         
         if (currentRoom.equals("Beginner"))
             if (!hasPrompted)
-        if (score == numTargets){
+        if (score == numTargets)
+        {
           if (!easterSD)
             playSound(snd_win,false);
             hasPrompted = true;
             
-            JOptionPane.showMessageDialog(currentFrame, "YOU WIN!");  
-          
+            JOptionPane.showMessageDialog(currentFrame, "YOU WIN!");   
         }
+        
         if (currentRoom.equals("Inter"))
             if (!hasPrompted)
-        if (score == numTargets){
+        if (score == numTargets)
+        {
           if (!easterSD)
             playSound(snd_win,false);
             hasPrompted = true;
             
             JOptionPane.showMessageDialog(currentFrame, "YOU WIN!");  
-          
         }
-
-        /*
-        for (GameObject curr : objs) {
-            boolean over = true;
-            if (curr instanceof WinBlock) {
-                if (((WinBlock) curr).HIT == false) {
-                    over = false;
-                }
-
-            }
-            gameWon = over;
-        }
-        for (GameObject curr : objs) {
-            boolean over = true;
-            if (curr instanceof Laser) {
-                if (((Laser) curr).visible == false) {
-                    over = false;
-                }
-
-            }
-            gameOver = over;
-        }
-        
-        if (gameOver){
-            if (!hasPrompted){
-                if (gameWon){
-                    JOptionPane.showMessageDialog(currentFrame, "YOU WIN!");
-                    hasPrompted = true;
-                }
-                else{
-                    JOptionPane.showMessageDialog(currentFrame, "YOU LOSE!");
-                    hasPrompted = true;
-                }
-            }
-            
-        }
-        
-        */
-        
     }
 
-    public void mouseEntered(MouseEvent e) {
+    /**
+     * 
+     * @param e 
+     */
+    public void mouseEntered(MouseEvent e) 
+    {
     }
 
-    public void mouseExited(MouseEvent e) {
+    /**
+     * 
+     * @param e 
+     */
+    public void mouseExited(MouseEvent e) 
+    {
     }
 
-    public void mousePressed(MouseEvent e) {
-        if (e.getButton() == MouseEvent.BUTTON2) {
+    /**
+     * 
+     * @param e 
+     */
+    public void mousePressed(MouseEvent e) 
+    {
+        if (e.getButton() == MouseEvent.BUTTON2) 
+        {
             toString();
         }
     }
 
-    public void mouseReleased(MouseEvent e) {
+    /**
+     * 
+     * @param e 
+     */
+    public void mouseReleased(MouseEvent e) 
+    {
         int x = e.getX();
         int y = e.getY();
         Point p = new Point(x, y);
-
     }
 
-    public void mouseClicked(MouseEvent e) {
+    /**
+     * 
+     * @param e 
+     */
+    public void mouseClicked(MouseEvent e) 
+    {
         int x = e.getX();
         int y  = e.getY() - 25;
         Point p = new Point(x, y);
 
-        //TITLE
-        for (GameObject curr : titleobjs) {
-                if (curr instanceof LevelSelect) {
-                    if (curr.mask.contains(p)) {
-                        if (curr.toString().equals("1")){
-                            for (int i = 0; i < 5; i++) {
-                        for (int j = 0; j < 5; j++) {
-                            board[i][j] = original_board[i][j];
+        for (GameObject curr : titleobjs) 
+        {
+            if (curr instanceof LevelSelect) 
+            {
+                if (curr.mask.contains(p)) 
+                {
+                    if (curr.toString().equals("1"))
+                    {
+                        for (int i = 0; i < 5; i++) 
+                        {
+                            for (int j = 0; j < 5; j++) 
+                            {
+                                board[i][j] = original_board[i][j];
+                            }
                         }
+                        curr.clicked();
+                        currentFrame.dispose();
+                        titleobjs.clear();
+                        mainObj.beginnerRoom();   
                     }
-                         curr.clicked();
-                         currentFrame.dispose();
-                         titleobjs.clear();
-                         mainObj.beginnerRoom();   
+                    if (curr.toString().equals("2"))
+                    {
+                        for (int i = 0; i < 5; i++) 
+                        {
+                            for (int j = 0; j < 5; j++) 
+                            {
+                                board[i][j] = original_board[i][j];
+                            }
                         }
-                        if (curr.toString().equals("2")){
-                            for (int i = 0; i < 5; i++) {
-                        for (int j = 0; j < 5; j++) {
-                            board[i][j] = original_board[i][j];
-                        }
-                    }
-                         curr.clicked();
-                         currentFrame.dispose();
-                         titleobjs.clear();
-                         mainObj.interRoom();   
-                        }
+                        curr.clicked();
+                        currentFrame.dispose();
+                        titleobjs.clear();
+                        mainObj.interRoom();   
                     }
                 }
+            }
         }
-         for (GameObject currx : titleobjs) {
-                        if (currx instanceof MetaEasterEgg) {
-                    if (currx.mask.contains(p)) {
-                        if (!easterSD){
-                    currx.clicked();
+        for (GameObject currx : titleobjs) 
+        {
+            if (currx instanceof MetaEasterEgg) 
+            {
+                if (currx.mask.contains(p)) 
+                {
+                    if (!easterSD)
+                    {
+                        currx.clicked();
                         easterSD = true;
-                         playSound(snd_sd,true); 
-                    }
+                        playSound(snd_sd,true); 
                     }
                 }
+            }
         }
         
-        //LEVEL 1
-        //test for clicking
-        for (GameObject currx : objs) {
-                        if (currx instanceof MenuButton) {
-                    if (currx.mask.contains(p)) {
+        for (GameObject currx : objs) 
+        {
+            if (currx instanceof MenuButton) 
+            {
+                if (currx.mask.contains(p)) 
+                {
                     currx.clicked();
-                         currentFrame.dispose();
-                         objs.clear();
-                         mainObj.titleScreen();    
-                    }
+                    currentFrame.dispose();
+                    objs.clear();
+                    mainObj.titleScreen();    
                 }
+            }
         }
        
-
-       
-        if (!fired) {
-            for (GameObject curr : objs) {
-                if (curr instanceof MirrorBlock) {
-                    if (curr.mask.contains(p)) {
-                        if (curr.visible) {
-                            if (e.getButton() == MouseEvent.BUTTON1) {
+        if (!fired) 
+        {
+            for (GameObject curr : objs) 
+            {
+                if (curr instanceof MirrorBlock) 
+                {
+                    if (curr.mask.contains(p)) 
+                    {
+                        if (curr.visible) 
+                        {
+                            if (e.getButton() == MouseEvent.BUTTON1) 
+                            {
                                 curr.clicked();
                             }
-                            if (!hasSelected) {
-                                if (e.getButton() == MouseEvent.BUTTON3) {
-                                    for (GameObject curr2 : objs) {
-                                        if (curr2 instanceof Spaces) {
-                                            if (curr2.mask.contains(p)) {
+                            if (!hasSelected) 
+                            {
+                                if (e.getButton() == MouseEvent.BUTTON3) 
+                                {
+                                    for (GameObject curr2 : objs) 
+                                    {
+                                        if (curr2 instanceof Spaces) 
+                                        {
+                                            if (curr2.mask.contains(p)) 
+                                            {
                                                 curr2.selected = true;
                                             }
                                         }
                                     }
-                                    if (!curr.locked) {
+                                    if (!curr.locked) 
+                                    {
                                         curr.rClicked();
                                         curr.selected = true;
                                         hasSelected = true;
                                     }
                                 }
                             }
-
                         }
-
                     }
                 }
-                if (curr instanceof DoubleMirror) {
-                    if (curr.mask.contains(p)) {
-                        if (curr.visible) {
-                            if (e.getButton() == MouseEvent.BUTTON1) {
+                if (curr instanceof DoubleMirror) 
+                {
+                    if (curr.mask.contains(p)) 
+                    {
+                        if (curr.visible) 
+                        {
+                            if (e.getButton() == MouseEvent.BUTTON1) 
+                            {
                                 curr.clicked();
                             }
-                            if (!hasSelected) {
-                                if (e.getButton() == MouseEvent.BUTTON3) {
-                                    for (GameObject curr2 : objs) {
-                                        if (curr2 instanceof Spaces) {
-                                            if (curr2.mask.contains(p)) {
+                            if (!hasSelected) 
+                            {
+                                if (e.getButton() == MouseEvent.BUTTON3) 
+                                {
+                                    for (GameObject curr2 : objs) 
+                                    {
+                                        if (curr2 instanceof Spaces) 
+                                        {
+                                            if (curr2.mask.contains(p)) 
+                                            {
                                                 curr2.selected = true;
                                             }
                                         }
                                     }
-                                    if (!curr.locked) {
+                                    if (!curr.locked) 
+                                    {
                                         curr.rClicked();
                                         curr.selected = true;
                                         hasSelected = true;
                                     }
                                 }
                             }
-
                         }
+                    }
+                }
+             
+                if (curr instanceof SplitMirror) 
+                {
+                    if (curr.mask.contains(p)) 
+                    {
+                        if (curr.visible) 
+                        {
+                            if (e.getButton() == MouseEvent.BUTTON1) 
+                            {
+                                curr.clicked();
+                            }
+                            if (!hasSelected) 
+                            {
+                                if (e.getButton() == MouseEvent.BUTTON3) 
+                                {
+                                    for (GameObject curr2 : objs) 
+                                    {
+                                        if (curr2 instanceof Spaces) 
+                                        {
+                                            if (curr2.mask.contains(p))
+                                            {
+                                                curr2.selected = true;
+                                            }
+                                        }
+                                    }
+                                    if (!curr.locked) 
+                                    {
+                                        curr.rClicked();
+                                        curr.selected = true;
+                                        hasSelected = true;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
 
+                if (curr instanceof LaserBlock) 
+                {
+                    if (curr.mask.contains(p)) 
+                    {
+                        if (curr.visible) 
+                        {
+                            if (e.getButton() == MouseEvent.BUTTON1) 
+                            {
+                                curr.clicked();
+                            }
+                            if (!hasSelected) 
+                            {
+                                if (e.getButton() == MouseEvent.BUTTON3) 
+                                {
+                                    for (GameObject curr2 : objs) 
+                                    {
+                                        if (curr2 instanceof Spaces) 
+                                        {
+                                            if (curr2.mask.contains(p)) 
+                                            {
+                                                curr2.selected = true;
+                                            }
+                                        }
+                                    }
+                                    if (!curr.locked) 
+                                    {
+                                        curr.rClicked();
+                                        curr.selected = true;
+                                        hasSelected = true;
+                                    }
+                                }
+                            }
+                        }
                     }
                 }
                 
-                if (curr instanceof SplitMirror) {
-                    if (curr.mask.contains(p)) {
-                        if (curr.visible) {
-                            if (e.getButton() == MouseEvent.BUTTON1) {
-                                curr.clicked();
-                            }
-                            if (!hasSelected) {
-                                if (e.getButton() == MouseEvent.BUTTON3) {
-                                    for (GameObject curr2 : objs) {
-                                        if (curr2 instanceof Spaces) {
-                                            if (curr2.mask.contains(p)) {
-                                                curr2.selected = true;
-                                            }
-                                        }
-                                    }
-                                    if (!curr.locked) {
-                                        curr.rClicked();
-                                        curr.selected = true;
-                                        hasSelected = true;
-                                    }
-                                }
-                            }
-
-                        }
-
-                    }
-                }
-
-                if (curr instanceof LaserBlock) {
-                    if (curr.mask.contains(p)) {
-                        if (curr.visible) {
-                            if (e.getButton() == MouseEvent.BUTTON1) {
-                                curr.clicked();
-                            }
-                            if (!hasSelected) {
-                                if (e.getButton() == MouseEvent.BUTTON3) {
-                                    for (GameObject curr2 : objs) {
-                                        if (curr2 instanceof Spaces) {
-                                            if (curr2.mask.contains(p)) {
-                                                curr2.selected = true;
-                                            }
-                                        }
-                                    }
-                                    if (!curr.locked) {
-                                        curr.rClicked();
-                                        curr.selected = true;
-                                        hasSelected = true;
-                                    }
-                                }
-                            }
-                        }
-
-                    }
-                }
-                
-                if (curr instanceof FireButton) {
-                    if (curr.mask.contains(p)) {
-                        if (curr.visible) {
+                if (curr instanceof FireButton) 
+                {
+                    if (curr.mask.contains(p)) 
+                    {
+                        if (curr.visible) 
+                        {
                             curr.clicked();
-                            if (fired == false) {
-                                for (GameObject check3 : objs) {
-                                    if (check3 instanceof LaserBlock) {
+                            if (fired == false) 
+                            {
+                                for (GameObject check3 : objs) 
+                                {
+                                    if (check3 instanceof LaserBlock) 
+                                    {
                                         int thisSpeed = 15;
-                                        if (((LaserBlock) check3).myNumber() == 11) {
+                                        if (((LaserBlock) check3).myNumber() 
+                                                == 11) 
+                                        {
                                             fired = true;
-                                            objs.add(new Laser(nextPoint[0], nextPoint[1], -1 *thisSpeed, 0, thisSpeed));
+                                            objs.add(new Laser(nextPoint[0],
+                                                    nextPoint[1], -1 *thisSpeed,
+                                                    0, thisSpeed));
                                         }
-                                        if (((LaserBlock) check3).myNumber() == 12) {
+                                        if (((LaserBlock) check3).myNumber() 
+                                                == 12) 
+                                        {
                                             fired = true;
-                                            objs.add(new Laser(nextPoint[0], nextPoint[1], thisSpeed, 0, thisSpeed));
+                                            objs.add(new Laser(nextPoint[0], 
+                                                    nextPoint[1], thisSpeed,
+                                                    0, thisSpeed));
                                         }
-                                        if (((LaserBlock) check3).myNumber() == 13) {
+                                        if (((LaserBlock) check3).myNumber() 
+                                                == 13) 
+                                        {
                                             fired = true;
-                                            objs.add(new Laser(nextPoint[0], nextPoint[1], 0, -1* thisSpeed, thisSpeed));
+                                            objs.add(new Laser(nextPoint[0], 
+                                                    nextPoint[1], 0, 
+                                                    -1* thisSpeed, thisSpeed));
                                         }
-                                        if (((LaserBlock) check3).myNumber() == 14) {
+                                        if (((LaserBlock) check3).myNumber() 
+                                                == 14) 
+                                        {
                                             fired = true;
-                                            objs.add(new Laser(nextPoint[0], nextPoint[1], 0, thisSpeed, thisSpeed));
+                                            objs.add(new Laser(nextPoint[0], 
+                                                    nextPoint[1], 0, 
+                                                    thisSpeed, thisSpeed));
                                         }
                                     }
                                 }
-
                             }
-                            
-                            
                         }
                     }
                 }
 
-                if (curr instanceof Spaces) {
-                    if (e.getButton() == MouseEvent.BUTTON1) {
-                        if (curr.mask.contains(p)) {
-                            if (board[((Spaces) curr).getID()[0]][((Spaces) curr).getID()[1]] < 1) {
-                                if (hasSelected) {
-
+                if (curr instanceof Spaces) 
+                {
+                    if (e.getButton() == MouseEvent.BUTTON1) 
+                    {
+                        if (curr.mask.contains(p)) 
+                        {
+                            if (board[((Spaces) curr).getID()[0]]
+                                    [((Spaces) curr).getID()[1]] < 1) 
+                            {
+                                if (hasSelected) 
+                                {
                                     moveTo[0] = curr.x;
                                     moveTo[1] = curr.y;
                                     curr.clicked();
 
-                                    for (GameObject check2 : objs) {
-                                        if (check2 instanceof MirrorBlock) {
-                                            if (check2.selected) {
-                                                check2.moveTowardsPoint(curr.getX(), curr.getY(), 5);
+                                    for (GameObject check2 : objs) 
+                                    {
+                                        if (check2 instanceof MirrorBlock) 
+                                        {
+                                            if (check2.selected) 
+                                            {
+                                                check2.moveTowardsPoint(
+                                                        curr.getX(), 
+                                                        curr.getY(), 5);
                                                 check2.selected = false;
-                                                board[((Spaces) curr).getID()[0]][((Spaces) curr).getID()[1]] = ((MirrorBlock) check2).myNumber();
-                                                check2.playSound(snd_slide, false);
-                                                int s = ((Spaces) curr).getRawID();
+                                                board[((Spaces) curr).getID()
+                                                        [0]][((Spaces) curr)
+                                                                .getID()[1]] = 
+                                                        ((MirrorBlock) check2)
+                                                                .myNumber();
+                                                check2.playSound(snd_slide, 
+                                                        false);
+                                                int s = ((Spaces) curr)
+                                                        .getRawID();
                                                 ((MirrorBlock) check2).setID(s);
                                                 hasSelected = false;
-                                                for (GameObject check3 : objs) {
-                                                    if (check3 instanceof Spaces) {
-                                                        if (check3.selected) {
-                                                            board[((Spaces) check3).getID()[0]][((Spaces) check3).getID()[1]] = 0;
-                                                            check3.selected = false;
+                                                for (GameObject check3 : objs) 
+                                                {
+                                                    if (check3 instanceof 
+                                                            Spaces) 
+                                                    {
+                                                        if (check3.selected)
+                                                        {
+                                                            board[((Spaces) 
+                                                                    check3)
+                                                                    .getID()[0]]
+                                                                 [((Spaces) 
+                                                                    check3)
+                                                                    .getID()
+                                                                    [1]] = 0;
+                                                            check3.selected = 
+                                                                    false;
                                                         }
                                                     }
                                                 }
                                             }
                                         }
-                                        if (check2 instanceof DoubleMirror) {
-                                            if (check2.selected) {
-                                                check2.moveTowardsPoint(curr.getX(), curr.getY(), 5);
+                                        if (check2 instanceof DoubleMirror) 
+                                        {
+                                            if (check2.selected) 
+                                            {
+                                                check2.moveTowardsPoint(
+                                                        curr.getX(), 
+                                                        curr.getY(), 5);
                                                 check2.selected = false;
-                                                board[((Spaces) curr).getID()[0]][((Spaces) curr).getID()[1]] = ((DoubleMirror) check2).myNumber();
-                                                check2.playSound(snd_slide, false);
-                                                int s = ((Spaces) curr).getRawID();
-                                                ((DoubleMirror) check2).setID(s);
+                                                board[((Spaces) curr)
+                                                        .getID()[0]]
+                                                        [((Spaces) curr)
+                                                        .getID()[1]] = 
+                                                        ((DoubleMirror) 
+                                                            check2).myNumber();
+                                                check2.playSound(snd_slide, 
+                                                        false);
+                                                int s = ((Spaces) curr)
+                                                        .getRawID();
+                                                ((DoubleMirror) check2)
+                                                        .setID(s);
                                                 hasSelected = false;
-                                                for (GameObject check3 : objs) {
-                                                    if (check3 instanceof Spaces) {
-                                                        if (check3.selected) {
-                                                            board[((Spaces) check3).getID()[0]][((Spaces) check3).getID()[1]] = 0;
-                                                            check3.selected = false;
+                                                for (GameObject check3 : objs)
+                                                {
+                                                    if (check3 instanceof 
+                                                            Spaces) 
+                                                    {
+                                                        if (check3.selected) 
+                                                        {
+                                                            board[((Spaces) 
+                                                                    check3)
+                                                                    .getID()[0]]
+                                                                 [((Spaces) 
+                                                                    check3)
+                                                                    .getID()[1]] 
+                                                                    = 0;
+                                                            check3.selected = 
+                                                                    false;
                                                         }
                                                     }
                                                 }
                                             }
                                         }
                                         
-                                        if (check2 instanceof SplitMirror) {
-                                            if (check2.selected) {
-                                                check2.moveTowardsPoint(curr.getX(), curr.getY(), 5);
+                                        if (check2 instanceof SplitMirror) 
+                                        {
+                                            if (check2.selected) 
+                                            {
+                                                check2.moveTowardsPoint(
+                                                       curr.getX(), curr.getY(),
+                                                        5);
                                                 check2.selected = false;
-                                                board[((Spaces) curr).getID()[0]][((Spaces) curr).getID()[1]] = ((SplitMirror) check2).myNumber();
-                                                check2.playSound(snd_slide, false);
-                                                int s = ((Spaces) curr).getRawID();
+                                                board[((Spaces) curr)
+                                                        .getID()[0]]
+                                                     [((Spaces) curr)
+                                                        .getID()[1]] = 
+                                                        ((SplitMirror) check2)
+                                                                .myNumber();
+                                                check2.playSound(snd_slide, 
+                                                        false);
+                                                int s = ((Spaces) curr)
+                                                        .getRawID();
                                                 ((SplitMirror) check2).setID(s);
                                                 hasSelected = false;
-                                                for (GameObject check3 : objs) {
-                                                    if (check3 instanceof Spaces) {
-                                                        if (check3.selected) {
-                                                            board[((Spaces) check3).getID()[0]][((Spaces) check3).getID()[1]] = 0;
-                                                            check3.selected = false;
+                                                for (GameObject check3 : objs) 
+                                                {
+                                                    if (check3 instanceof 
+                                                            Spaces) 
+                                                    {
+                                                        if (check3.selected) 
+                                                        {
+                                                            board[((Spaces) 
+                                                                    check3)
+                                                                    .getID()[0]]
+                                                                 [((Spaces) 
+                                                                    check3)
+                                                                    .getID()[1]]
+                                                                    = 0;
+                                                            check3.selected = 
+                                                                    false;
                                                         }
                                                     }
                                                 }
                                             }
                                         }
-
                                     }
-
                                 }
-                                for (GameObject check3 : objs) {
-                                    if (check3 instanceof LaserBlock) {
-                                        if (check3.selected) {
-                                            check3.moveTowardsPoint(curr.getX(), curr.getY(), 5);
+                                
+                                for (GameObject check3 : objs) 
+                                {
+                                    if (check3 instanceof LaserBlock) 
+                                    {
+                                        if (check3.selected) 
+                                        {
+                                            check3.moveTowardsPoint(curr.getX(),
+                                                    curr.getY(), 5);
                                             nextPoint[0] = curr.getX();
                                             nextPoint[1] = curr.getY();
                                             check3.selected = false;
-                                            board[((Spaces) curr).getID()[0]][((Spaces) curr).getID()[1]] = ((LaserBlock) check3).myNumber();
+                                            board[((Spaces) curr).getID()[0]]
+                                                 [((Spaces) curr).getID()[1]] = 
+                                                 ((LaserBlock) check3)
+                                                         .myNumber();
                                             check3.playSound(snd_slide, false);
                                             hasSelected = false;
-                                            for (GameObject check4 : objs) {
-                                                if (check4 instanceof Spaces) {
-                                                    if (check4.selected) {
-                                                        board[((Spaces) check4).getID()[0]][((Spaces) check4).getID()[1]] = 0;
+                                            for (GameObject check4 : objs) 
+                                            {
+                                                if (check4 instanceof Spaces) 
+                                                {
+                                                    if (check4.selected) 
+                                                    {
+                                                        board[((Spaces) check4)
+                                                                .getID()[0]]
+                                                             [((Spaces) check4)
+                                                                .getID()[1]] 
+                                                                = 0;
                                                         check4.selected = false;
                                                     }
-
                                                 }
                                             }
                                         }
-
                                     }
-
                                 }
                             }
                         }
                     }
-
                 }
-                //end of test code
-
             }
-
         }
-        for (GameObject curr : objs) {
-            if (curr instanceof ResetButton) {
-                if (curr.mask.contains(p)) {
+        
+        for (GameObject curr : objs) 
+        {
+            if (curr instanceof ResetButton) 
+            {
+                if (curr.mask.contains(p)) 
+                {
                     hasPrompted = false;
                     gameOver = false;
-                    for (int i = 0; i < 5; i++) {
-                        for (int j = 0; j < 5; j++) {
+                    for (int i = 0; i < 5; i++) 
+                    {
+                        for (int j = 0; j < 5; j++) 
+                        {
                             board[i][j] = original_board[i][j];
                         }
                     }
 
-                    if (curr.visible) {
+                    if (curr.visible) 
+                    {
                         score = 0;
                         curr.clicked();
                         fired = false;
-                        for (GameObject curr2 : objs) {
-                            if (curr2 instanceof MirrorBlock) {
-                                curr2.moveTowardsPoint(curr2.startx, curr2.starty, 5);
+                        for (GameObject curr2 : objs) 
+                        {
+                            if (curr2 instanceof MirrorBlock) 
+                            {
+                                curr2.moveTowardsPoint(curr2.startx, 
+                                        curr2.starty, 5);
                                 ((MirrorBlock) curr2).setHit(false);
                             }
-                            else if (curr2 instanceof DoubleMirror) {
-                                curr2.moveTowardsPoint(curr2.startx, curr2.starty, 5);
+                            else if (curr2 instanceof DoubleMirror) 
+                            {
+                                curr2.moveTowardsPoint(curr2.startx,
+                                        curr2.starty, 5);
                                 ((DoubleMirror) curr2).setHit(false);
                             }
-                            else if (curr2 instanceof SplitMirror) {
-                                curr2.moveTowardsPoint(curr2.startx, curr2.starty, 5);
+                            else if (curr2 instanceof SplitMirror) 
+                            {
+                                curr2.moveTowardsPoint(curr2.startx, 
+                                        curr2.starty, 5);
                                 ((SplitMirror) curr2).setHit(false);
                             }
-                            else if (curr2 instanceof LaserBlock) {
-                                curr2.moveTowardsPoint(curr2.startx, curr2.starty, 5);
-
+                            else if (curr2 instanceof LaserBlock) 
+                            {
+                                curr2.moveTowardsPoint(curr2.startx, 
+                                        curr2.starty, 5);
                             }
-                            if (curr2 instanceof WinBlock) {
+                            
+                            if (curr2 instanceof WinBlock) 
+                            {
                                 ((WinBlock) curr2).setHit(false);
 
-                            } else if (curr2 instanceof EndGameText) {
+                            } 
+                            else if (curr2 instanceof EndGameText) 
+                            {
                                 curr2.switchVisible();
-
                             }
                         }
                         
-                        for (GameObject curr3 : objs) {
-                            if (curr3 instanceof Laser) {
+                        for (GameObject curr3 : objs) 
+                        {
+                            if (curr3 instanceof Laser) 
+                            {
                                 curr3.jumpX(-99);
                                 ((Laser)curr3).switchVisible();
                                 curr3.hspeed = 0;
                                 curr3.vspeed = 0;
-
                             }
-
                         }
-                        for (GameObject curr4 : objs) {
-                            if (curr4 instanceof Explosion) {
+                        for (GameObject curr4 : objs) 
+                        {
+                            if (curr4 instanceof Explosion) 
+                            {
                                 curr4.visible = false;
+                            }
                         }
-                    }
                     }
                 }
             }
         }
-        //LEVEL 1
-        //test for clicking
-        for (GameObject currx : lv2objs) {
-                        if (currx instanceof MenuButton) {
-                    if (currx.mask.contains(p)) {
+        
+        for (GameObject currx : lv2objs) 
+        {
+            if (currx instanceof MenuButton) 
+            {
+                if (currx.mask.contains(p)) 
+                {
                     currx.clicked();
-                         currentFrame.dispose();
-                         lv2objs.clear();
-                         mainObj.titleScreen();    
-                    }
+                    currentFrame.dispose();
+                    lv2objs.clear();
+                    mainObj.titleScreen();    
                 }
+            }
         }
        
-
-       
-        if (!fired) {
-            for (GameObject curr : lv2objs) {
-                if (curr instanceof MirrorBlock) {
-                    if (curr.mask.contains(p)) {
-                        if (curr.visible) {
-                            if (e.getButton() == MouseEvent.BUTTON1) {
+        if (!fired) 
+        {
+            for (GameObject curr : lv2objs) 
+            {
+                if (curr instanceof MirrorBlock) 
+                {
+                    if (curr.mask.contains(p)) 
+                    {
+                        if (curr.visible) 
+                        {
+                            if (e.getButton() == MouseEvent.BUTTON1) 
+                            {
                                 curr.clicked();
                             }
-                            if (!hasSelected) {
-                                if (e.getButton() == MouseEvent.BUTTON3) {
-                                    for (GameObject curr2 : lv2objs) {
-                                        if (curr2 instanceof Spaces) {
-                                            if (curr2.mask.contains(p)) {
+                            if (!hasSelected) 
+                            {
+                                if (e.getButton() == MouseEvent.BUTTON3) 
+                                {
+                                    for (GameObject curr2 : lv2objs) 
+                                    {
+                                        if (curr2 instanceof Spaces) 
+                                        {
+                                            if (curr2.mask.contains(p)) 
+                                            {
                                                 curr2.selected = true;
                                             }
                                         }
                                     }
-                                    if (!curr.locked) {
+                                    if (!curr.locked) 
+                                    {
                                         curr.rClicked();
                                         curr.selected = true;
                                         hasSelected = true;
                                     }
                                 }
                             }
-
                         }
-
                     }
                 }
-                if (curr instanceof DoubleMirror) {
-                    if (curr.mask.contains(p)) {
-                        if (curr.visible) {
-                            if (e.getButton() == MouseEvent.BUTTON1) {
+                if (curr instanceof DoubleMirror) 
+                {
+                    if (curr.mask.contains(p)) 
+                    {
+                        if (curr.visible) 
+                        {
+                            if (e.getButton() == MouseEvent.BUTTON1) 
+                            {
                                 curr.clicked();
                             }
-                            if (!hasSelected) {
-                                if (e.getButton() == MouseEvent.BUTTON3) {
-                                    for (GameObject curr2 : lv2objs) {
-                                        if (curr2 instanceof Spaces) {
-                                            if (curr2.mask.contains(p)) {
+                            if (!hasSelected) 
+                            {
+                                if (e.getButton() == MouseEvent.BUTTON3) 
+                                {
+                                    for (GameObject curr2 : lv2objs) 
+                                    {
+                                        if (curr2 instanceof Spaces) 
+                                        {
+                                            if (curr2.mask.contains(p)) 
+                                            {
                                                 curr2.selected = true;
                                             }
                                         }
                                     }
-                                    if (!curr.locked) {
-                                        curr.rClicked();
-                                        curr.selected = true;
-                                        hasSelected = true;
-                                    }
-                                }
-                            }
-
-                        }
-
-                    }
-                }
-                
-                if (curr instanceof SplitMirror) {
-                    if (curr.mask.contains(p)) {
-                        if (curr.visible) {
-                            if (e.getButton() == MouseEvent.BUTTON1) {
-                                curr.clicked();
-                            }
-                            if (!hasSelected) {
-                                if (e.getButton() == MouseEvent.BUTTON3) {
-                                    for (GameObject curr2 : lv2objs) {
-                                        if (curr2 instanceof Spaces) {
-                                            if (curr2.mask.contains(p)) {
-                                                curr2.selected = true;
-                                            }
-                                        }
-                                    }
-                                    if (!curr.locked) {
-                                        curr.rClicked();
-                                        curr.selected = true;
-                                        hasSelected = true;
-                                    }
-                                }
-                            }
-
-                        }
-
-                    }
-                }
-
-                if (curr instanceof LaserBlock) {
-                    if (curr.mask.contains(p)) {
-                        if (curr.visible) {
-                            if (e.getButton() == MouseEvent.BUTTON1) {
-                                curr.clicked();
-                            }
-                            if (!hasSelected) {
-                                if (e.getButton() == MouseEvent.BUTTON3) {
-                                    for (GameObject curr2 : lv2objs) {
-                                        if (curr2 instanceof Spaces) {
-                                            if (curr2.mask.contains(p)) {
-                                                curr2.selected = true;
-                                            }
-                                        }
-                                    }
-                                    if (!curr.locked) {
+                                    if (!curr.locked) 
+                                    {
                                         curr.rClicked();
                                         curr.selected = true;
                                         hasSelected = true;
@@ -1302,339 +1448,557 @@ public class CoffeeSucks extends JPanel implements ActionListener, MouseListener
                                 }
                             }
                         }
-
                     }
                 }
                 
-                if (curr instanceof FireButton) {
-                    if (curr.mask.contains(p)) {
-                        if (curr.visible) {
+                if (curr instanceof SplitMirror) 
+                {
+                    if (curr.mask.contains(p)) 
+                    {
+                        if (curr.visible) 
+                        {
+                            if (e.getButton() == MouseEvent.BUTTON1) 
+                            {
+                                curr.clicked();
+                            }
+                            if (!hasSelected) 
+                            {
+                                if (e.getButton() == MouseEvent.BUTTON3) 
+                                {
+                                    for (GameObject curr2 : lv2objs) 
+                                    {
+                                        if (curr2 instanceof Spaces) 
+                                        {
+                                            if (curr2.mask.contains(p)) 
+                                            {
+                                                curr2.selected = true;
+                                            }
+                                        }
+                                    }
+                                    if (!curr.locked) 
+                                    {
+                                        curr.rClicked();
+                                        curr.selected = true;
+                                        hasSelected = true;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+
+                if (curr instanceof LaserBlock) 
+                {
+                    if (curr.mask.contains(p)) 
+                    {
+                        if (curr.visible) 
+                        {
+                            if (e.getButton() == MouseEvent.BUTTON1) 
+                            {
+                                curr.clicked();
+                            }
+                            if (!hasSelected) 
+                            {
+                                if (e.getButton() == MouseEvent.BUTTON3) 
+                                {
+                                    for (GameObject curr2 : lv2objs) 
+                                    {
+                                        if (curr2 instanceof Spaces) 
+                                        {
+                                            if (curr2.mask.contains(p)) 
+                                            {
+                                                curr2.selected = true;
+                                            }
+                                        }
+                                    }
+                                    if (!curr.locked) 
+                                    {
+                                        curr.rClicked();
+                                        curr.selected = true;
+                                        hasSelected = true;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                
+                if (curr instanceof FireButton) 
+                {
+                    if (curr.mask.contains(p)) 
+                    {
+                        if (curr.visible) 
+                        {
                             curr.clicked();
-                            if (fired == false) {
-                                for (GameObject check3 : lv2objs) {
-                                    if (check3 instanceof LaserBlock) {
+                            if (fired == false) 
+                            {
+                                for (GameObject check3 : lv2objs) 
+                                {
+                                    if (check3 instanceof LaserBlock) 
+                                    {
                                         int thisSpeed = 15;
-                                        if (((LaserBlock) check3).myNumber() == 11) {
+                                        if (((LaserBlock) check3).myNumber() 
+                                                == 11) 
+                                        {
                                             fired = true;
-                                            lv2objs.add(new Laser(nextPoint[0], nextPoint[1], -1 *thisSpeed, 0, thisSpeed));
+                                            lv2objs.add(new Laser(nextPoint[0], 
+                                                    nextPoint[1], -1 *thisSpeed, 
+                                                    0, thisSpeed));
                                         }
-                                        if (((LaserBlock) check3).myNumber() == 12) {
+                                        if (((LaserBlock) check3).myNumber() 
+                                                == 12) 
+                                        {
                                             fired = true;
-                                            lv2objs.add(new Laser(nextPoint[0], nextPoint[1], thisSpeed, 0, thisSpeed));
+                                            lv2objs.add(new Laser(nextPoint[0], 
+                                                    nextPoint[1], thisSpeed, 0, 
+                                                    thisSpeed));
                                         }
-                                        if (((LaserBlock) check3).myNumber() == 13) {
+                                        if (((LaserBlock) check3).myNumber() 
+                                                == 13)
+                                        {
                                             fired = true;
-                                            lv2objs.add(new Laser(nextPoint[0], nextPoint[1], 0, -1* thisSpeed, thisSpeed));
+                                            lv2objs.add(new Laser(nextPoint[0], 
+                                                    nextPoint[1], 0,
+                                                    -1* thisSpeed, thisSpeed));
                                         }
-                                        if (((LaserBlock) check3).myNumber() == 14) {
+                                        if (((LaserBlock) check3).myNumber() 
+                                                == 14) 
+                                        {
                                             fired = true;
-                                            lv2objs.add(new Laser(nextPoint[0], nextPoint[1], 0, thisSpeed, thisSpeed));
-
+                                            lv2objs.add(new Laser(nextPoint[0], 
+                                                    nextPoint[1], 0, thisSpeed, 
+                                                    thisSpeed));
                                         }
                                     }
                                 }
-
                             }
-                            
-                            
                         }
                     }
                 }
 
-                if (curr instanceof Spaces) {
-                    if (e.getButton() == MouseEvent.BUTTON1) {
-                        if (curr.mask.contains(p)) {
-                            if (board[((Spaces) curr).getID()[0]][((Spaces) curr).getID()[1]] < 1) {
-                                if (hasSelected) {
-
+                if (curr instanceof Spaces) 
+                {
+                    if (e.getButton() == MouseEvent.BUTTON1) 
+                    {
+                        if (curr.mask.contains(p)) 
+                        {
+                            if (board[((Spaces) curr).getID()[0]]
+                                    [((Spaces) curr).getID()[1]] < 1) 
+                            {
+                                if (hasSelected) 
+                                {
                                     moveTo[0] = curr.x;
                                     moveTo[1] = curr.y;
                                     curr.clicked();
 
-                                    for (GameObject check2 : lv2objs) {
-                                        if (check2 instanceof MirrorBlock) {
-                                            if (check2.selected) {
-                                                check2.moveTowardsPoint(curr.getX(), curr.getY(), 5);
+                                    for (GameObject check2 : lv2objs) 
+                                    {
+                                        if (check2 instanceof MirrorBlock) 
+                                        {
+                                            if (check2.selected) 
+                                            {
+                                                check2.moveTowardsPoint(
+                                                        curr.getX(), 
+                                                        curr.getY(), 5);
                                                 check2.selected = false;
-                                                board[((Spaces) curr).getID()[0]][((Spaces) curr).getID()[1]] = ((MirrorBlock) check2).myNumber();
-                                                check2.playSound(snd_slide, false);
-                                                int s = ((Spaces) curr).getRawID();
+                                                board[((Spaces) curr).getID()
+                                                        [0]][((Spaces) curr)
+                                                        .getID()[1]] = 
+                                                        ((MirrorBlock) check2)
+                                                                .myNumber();
+                                                check2.playSound(snd_slide, 
+                                                        false);
+                                                int s = ((Spaces) curr)
+                                                        .getRawID();
                                                 ((MirrorBlock) check2).setID(s);
                                                 hasSelected = false;
-                                                for (GameObject check3 : lv2objs) {
-                                                    if (check3 instanceof Spaces) {
-                                                        if (check3.selected) {
-                                                            board[((Spaces) check3).getID()[0]][((Spaces) check3).getID()[1]] = 0;
-                                                            check3.selected = false;
+                                                for (GameObject check3 : 
+                                                        lv2objs) 
+                                                {
+                                                    if (check3 instanceof 
+                                                            Spaces) 
+                                                    {
+                                                        if (check3.selected) 
+                                                        {
+                                                            board[((Spaces) 
+                                                                    check3)
+                                                                    .getID()[0]]
+                                                                 [((Spaces) 
+                                                                    check3)
+                                                                    .getID()[1]] 
+                                                                    = 0;
+                                                            check3.selected = 
+                                                                    false;
                                                         }
                                                     }
                                                 }
                                             }
                                         }
-                                        if (check2 instanceof DoubleMirror) {
-                                            if (check2.selected) {
-                                                check2.moveTowardsPoint(curr.getX(), curr.getY(), 5);
+                                        if (check2 instanceof DoubleMirror) 
+                                        {
+                                            if (check2.selected) 
+                                            {
+                                                check2.moveTowardsPoint(
+                                                        curr.getX(), 
+                                                        curr.getY(), 5);
                                                 check2.selected = false;
-                                                board[((Spaces) curr).getID()[0]][((Spaces) curr).getID()[1]] = ((DoubleMirror) check2).myNumber();
-                                                check2.playSound(snd_slide, false);
-                                                int s = ((Spaces) curr).getRawID();
-                                                ((DoubleMirror) check2).setID(s);
+                                                board[((Spaces) curr).getID()
+                                                        [0]][((Spaces) curr)
+                                                                .getID()[1]] 
+                                                        = ((DoubleMirror) 
+                                                            check2).myNumber();
+                                                check2.playSound(snd_slide, 
+                                                        false);
+                                                int s = ((Spaces) curr)
+                                                        .getRawID();
+                                                ((DoubleMirror) check2)
+                                                        .setID(s);
                                                 hasSelected = false;
-                                                for (GameObject check3 : lv2objs) {
-                                                    if (check3 instanceof Spaces) {
-                                                        if (check3.selected) {
-                                                            board[((Spaces) check3).getID()[0]][((Spaces) check3).getID()[1]] = 0;
-                                                            check3.selected = false;
+                                                for (GameObject check3 : 
+                                                        lv2objs) 
+                                                {
+                                                    if (check3 instanceof 
+                                                            Spaces) 
+                                                    {
+                                                        if (check3.selected) 
+                                                        {
+                                                            board[((Spaces) 
+                                                                  check3)
+                                                                  .getID()[0]]
+                                                                 [((Spaces) 
+                                                                  check3)
+                                                                  .getID()[1]] 
+                                                                    = 0;
+                                                            check3.selected = 
+                                                                    false;
                                                         }
                                                     }
                                                 }
                                             }
                                         }
                                         
-                                        if (check2 instanceof SplitMirror) {
-                                            if (check2.selected) {
-                                                check2.moveTowardsPoint(curr.getX(), curr.getY(), 5);
+                                        if (check2 instanceof SplitMirror) 
+                                        {
+                                            if (check2.selected) 
+                                            {
+                                                check2.moveTowardsPoint(
+                                                        curr.getX(), 
+                                                        curr.getY(), 5);
                                                 check2.selected = false;
-                                                board[((Spaces) curr).getID()[0]][((Spaces) curr).getID()[1]] = ((SplitMirror) check2).myNumber();
-                                                check2.playSound(snd_slide, false);
-                                                int s = ((Spaces) curr).getRawID();
-                                                ((SplitMirror) check2).setID(s);
+                                                board[((Spaces) curr).getID()
+                                                        [0]][((Spaces) curr)
+                                                                .getID()[1]] = 
+                                                        ((SplitMirror) check2)
+                                                                .myNumber();
+                                                check2.playSound(snd_slide, 
+                                                        false);
+                                                int s = ((Spaces) curr)
+                                                        .getRawID();
+                                                ((SplitMirror) check2)
+                                                        .setID(s);
                                                 hasSelected = false;
-                                                for (GameObject check3 : lv2objs) {
-                                                    if (check3 instanceof Spaces) {
-                                                        if (check3.selected) {
-                                                            board[((Spaces) check3).getID()[0]][((Spaces) check3).getID()[1]] = 0;
-                                                            check3.selected = false;
+                                                for (GameObject check3 : 
+                                                        lv2objs) 
+                                                {
+                                                    if (check3 instanceof 
+                                                            Spaces) 
+                                                    {
+                                                        if (check3.selected) 
+                                                        {
+                                                            board[((Spaces) 
+                                                                    check3)
+                                                                    .getID()[0]]
+                                                                 [((Spaces) 
+                                                                    check3)
+                                                                    .getID()[1]]
+                                                                    = 0;
+                                                            check3.selected = 
+                                                                    false;
                                                         }
                                                     }
                                                 }
                                             }
                                         }
-
                                     }
-
                                 }
-                                for (GameObject check3 : lv2objs) {
-                                    if (check3 instanceof LaserBlock) {
-                                        if (check3.selected) {
-                                            check3.moveTowardsPoint(curr.getX(), curr.getY(), 5);
+                                
+                                for (GameObject check3 : lv2objs) 
+                                {
+                                    if (check3 instanceof LaserBlock) 
+                                    {
+                                        if (check3.selected) 
+                                        {
+                                            check3.moveTowardsPoint(curr.getX(),
+                                                    curr.getY(), 5);
                                             nextPoint[0] = curr.getX();
                                             nextPoint[1] = curr.getY();
                                             check3.selected = false;
-                                            board[((Spaces) curr).getID()[0]][((Spaces) curr).getID()[1]] = ((LaserBlock) check3).myNumber();
+                                            board[((Spaces) curr).getID()[0]]
+                                                 [((Spaces) curr).getID()[1]] = 
+                                              ((LaserBlock) check3).myNumber();
                                             check3.playSound(snd_slide, false);
                                             hasSelected = false;
-                                            for (GameObject check4 : lv2objs) {
-                                                if (check4 instanceof Spaces) {
-                                                    if (check4.selected) {
-                                                        board[((Spaces) check4).getID()[0]][((Spaces) check4).getID()[1]] = 0;
+                                            for (GameObject check4 : lv2objs) 
+                                            {
+                                                if (check4 instanceof Spaces) 
+                                                {
+                                                    if (check4.selected) 
+                                                    {
+                                                        board[((Spaces) check4)
+                                                                .getID()[0]]
+                                                             [((Spaces) check4)
+                                                                .getID()[1]] 
+                                                                = 0;
                                                         check4.selected = false;
                                                     }
-
                                                 }
                                             }
                                         }
-
                                     }
-
                                 }
                             }
                         }
                     }
-
                 }
-                //end of test code
-
             }
-
         }
-        for (GameObject curr : lv2objs) {
-            if (curr instanceof ResetButton) {
-                if (curr.mask.contains(p)) {
+        
+        for (GameObject curr : lv2objs) 
+        {
+            if (curr instanceof ResetButton) 
+            {
+                if (curr.mask.contains(p)) 
+                {
                     hasPrompted = false;
                     gameOver = false;
-                    for (int i = 0; i < 5; i++) {
-                        for (int j = 0; j < 5; j++) {
+                    for (int i = 0; i < 5; i++) 
+                    {
+                        for (int j = 0; j < 5; j++) 
+                        {
                             board[i][j] = original_board[i][j];
                         }
                     }
 
-                    if (curr.visible) {
+                    if (curr.visible) 
+                    {
                         score = 0;
                         curr.clicked();
                         fired = false;
-                        for (GameObject curr2 : lv2objs) {
-                            if (curr2 instanceof MirrorBlock) {
-                                curr2.moveTowardsPoint(curr2.startx, curr2.starty, 5);
+                        for (GameObject curr2 : lv2objs) 
+                        {
+                            if (curr2 instanceof MirrorBlock) 
+                            {
+                                curr2.moveTowardsPoint(curr2.startx, 
+                                        curr2.starty, 5);
                                 ((MirrorBlock) curr2).setHit(false);
                             }
-                            else if (curr2 instanceof DoubleMirror) {
-                                curr2.moveTowardsPoint(curr2.startx, curr2.starty, 5);
+                            else if (curr2 instanceof DoubleMirror) 
+                            {
+                                curr2.moveTowardsPoint(curr2.startx, 
+                                        curr2.starty, 5);
                                 ((DoubleMirror) curr2).setHit(false);
                             }
                             
-                            else if (curr2 instanceof SplitMirror) {
-                                curr2.moveTowardsPoint(curr2.startx, curr2.starty, 5);
+                            else if (curr2 instanceof SplitMirror) 
+                            {
+                                curr2.moveTowardsPoint(curr2.startx, 
+                                        curr2.starty, 5);
                                 ((SplitMirror) curr2).setHit(false);
                             }
-                            else if (curr2 instanceof LaserBlock) {
-                                curr2.moveTowardsPoint(curr2.startx, curr2.starty, 5);
-
+                            else if (curr2 instanceof LaserBlock) 
+                            {
+                                curr2.moveTowardsPoint(curr2.startx, 
+                                        curr2.starty, 5);
                             }
-                            if (curr2 instanceof WinBlock) {
+                            if (curr2 instanceof WinBlock) 
+                            {
                                 ((WinBlock) curr2).setHit(false);
 
-                            } else if (curr2 instanceof EndGameText) {
+                            } 
+                            else if (curr2 instanceof EndGameText) 
+                            {
                                 curr2.switchVisible();
-
                             }
                         }
                         
-                        for (GameObject curr3 : lv2objs) {
-                            if (curr3 instanceof Laser) {
+                        for (GameObject curr3 : lv2objs) 
+                        {
+                            if (curr3 instanceof Laser) 
+                            {
                                 curr3.jumpX(-99);
                                 ((Laser)curr3).switchVisible();
                                 curr3.hspeed = 0;
                                 curr3.vspeed = 0;
-
                             }
-                            for (GameObject curr4 : lv2objs) {
-                            if (curr4 instanceof Explosion) {
-                                curr4.visible = false;
+                            for (GameObject curr4 : lv2objs) 
+                            {
+                                if (curr4 instanceof Explosion) 
+                                {
+                                    curr4.visible = false;
+                                }
+                            }
                         }
                     }
                 }
             }
         }
     }
-        }
-    }
-        
 
-    public int[] getID(int ID) {
+    /**
+     * 
+     * @param ID
+     * @return 
+     */
+    public int[] getID(int ID) 
+    {
         int[] p = new int[2];
 
-        if (ID == 1) {
+        if (ID == 1) 
+        {
             p[0] = 0;
             p[1] = 0;
             return p;
         }
-        if (ID == 2) {
+        if (ID == 2) 
+        {
             p[0] = 1;
             p[1] = 0;
             return p;
         }
-        if (ID == 3) {
+        if (ID == 3) 
+        {
             p[0] = 2;
             p[1] = 0;
             return p;
         }
-        if (ID == 4) {
+        if (ID == 4) 
+        {
             p[0] = 3;
             p[1] = 0;
             return p;
         }
-        if (ID == 5) {
+        if (ID == 5) 
+        {
             p[0] = 4;
             p[1] = 0;
             return p; 
         }
-        if (ID == 6) {
+        if (ID == 6) 
+        {
             p[0] = 0;
             p[1] = 1;
             return p;
         }
-        if (ID == 7) {
+        if (ID == 7) 
+        {
             p[0] = 1;
             p[1] = 1;
             return p;
         }
-        if (ID == 8) {
+        if (ID == 8) 
+        {
             p[0] = 2;
             p[1] = 1;
             return p;
         }
-        if (ID == 9) {
+        if (ID == 9) 
+        {
             p[0] = 3;
             p[1] = 1;
             return p;
         }
-        if (ID == 10) {
+        if (ID == 10) 
+        {
             p[0] = 4;
             p[1] = 1;
             return p;
         }
-        if (ID == 11) {
+        if (ID == 11) 
+        {
             p[0] = 0;
             p[1] = 2;
             return p;
         }
-        if (ID == 12) {
+        if (ID == 12) 
+        {
             p[0] = 1;
             p[1] = 2;
             return p;
         }
-        if (ID == 13) {
+        if (ID == 13) 
+        {
             p[0] = 2;
             p[1] = 2;
             return p;
         }
-        if (ID == 14) {
+        if (ID == 14) 
+        {
             p[0] = 3;
             p[1] = 2;
             return p;
         }
-        if (ID == 15) {
+        if (ID == 15) 
+        {
             p[0] = 4;
             p[1] = 2;
             return p;
         }
-        if (ID == 16) {
+        if (ID == 16) 
+        {
             p[0] = 0;
             p[1] = 3;
             return p;
         }
-        if (ID == 17) {
+        if (ID == 17) 
+        {
             p[0] = 1;
             p[1] = 3;
             return p;
         }
-        if (ID == 18) {
+        if (ID == 18) 
+        {
             p[0] = 2;
             p[1] = 3;
             return p;
         }
-        if (ID == 19) {
+        if (ID == 19) 
+        {
             p[0] = 3;
             p[1] = 3;
             return p;
         }
-        if (ID == 20) {
+        if (ID == 20) 
+        {
             p[0] = 4;
             p[1] = 3;
             return p;
         }
-        if (ID == 21) {
+        if (ID == 21) 
+        {
             p[0] = 0;
             p[1] = 4;
             return p;
         }
-        if (ID == 22) {
+        if (ID == 22) 
+        {
             p[0] = 1;
             p[1] = 4;
             return p;
         }
-        if (ID == 23) {
+        if (ID == 23) 
+        {
             p[0] = 2;
             p[1] = 4;
             return p;
         }
-        if (ID == 24) {
+        if (ID == 24) 
+        {
             p[0] = 3;
             p[1] = 4;
             return p;
         }
-        if (ID == 25) {
+        if (ID == 25) 
+        {
             p[0] = 4;
             p[1] = 4;
             return p;
@@ -1642,19 +2006,33 @@ public class CoffeeSucks extends JPanel implements ActionListener, MouseListener
         return p;
     }
 
-    public String toString() {
-        for (int i = 0; i < 5; i++) {
-            for (int j = 0; j < 5; j++) {
+    /**
+     * 
+     * @return 
+     */
+    public String toString() 
+    {
+        for (int i = 0; i < 5; i++) 
+        {
+            for (int j = 0; j < 5; j++) 
+            {
                 System.out.println(i + ", " + j + " " + board[i][j]);
             }
         }
         return "hello";
     }
     
-    public void playSound(String soundfile, boolean loop){
+    /**
+     * 
+     * @param soundfile
+     * @param loop 
+     */
+    public void playSound(String soundfile, boolean loop)
+    {
         try
         {
-            AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new File(soundfile).getAbsoluteFile());
+            AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(
+                    new File(soundfile).getAbsoluteFile());
             Clip clip = AudioSystem.getClip();
             clip.open(audioInputStream);
             if (!loop)
@@ -1662,125 +2040,8 @@ public class CoffeeSucks extends JPanel implements ActionListener, MouseListener
             else
             clip.loop(Clip.LOOP_CONTINUOUSLY);
         }
-        catch (Exception ex){
+        catch (Exception ex)
+        {
         }   
     }
-
-    /* public void findNext(int[] p, String dir) {       
-        if (board[p[0]][p[1]] == 1) {
-            if (dir.equals("R")) {
-                for (int i = p[1]; i >= 0; i--) { //check up
-                    if (board[p[0]][i] != 0) {
-                        int[] myHit = new int[2];
-                        myHit[0] = p[0];
-                        myHit[1] = i;
-                        nextDir = "U";
-                        nextPoint = myHit;
-                        return;
-                    }
-                }
-            }
-        }
-        if (board[p[0]][p[1]] == 1) {
-            if (dir.equals("D")) {
-                for (int i = p[0]; i >= 0; i--) { //check left
-                    if (board[i][p[1]] != 0) {
-                        int[] myHit = new int[2];
-                        myHit[0] = i;
-                        myHit[1] = p[1];
-                        nextDir = "L";
-                        nextPoint = myHit;
-                        return;
-                    }
-                }
-            }
-        }
-        if (board[p[0]][p[1]] == 2) {
-            if (dir.equals("D")) {
-                for (int i = p[0]; i < 5; i++) { //check right
-                    if (board[i][p[1]] != 0) {
-                        int[] myHit = new int[2];
-                        myHit[0] = i;
-                        myHit[1] = p[1];
-                        nextDir = "R";
-                        nextPoint = myHit;
-                        return;
-                    }
-                }
-            }
-        }
-        if (board[p[0]][p[1]] == 2) {
-            if (dir.equals("L")) {
-                for (int i = p[1]; i >= 0; i--) { //check up
-                    if (board[p[0]][i] != 0) {
-                        int[] myHit = new int[2];
-                        myHit[0] = p[0];
-                        myHit[1] = i;
-                        nextDir = "U";
-                        nextPoint = myHit;
-                        return;
-                    }
-                }
-            }
-        }
-        if (board[p[0]][p[1]] == 3) {
-            if (dir.equals("R")) {
-                for (int i = p[1]; i < 5; i++) { //check down
-                    if (board[p[0]][i] != 0) {
-                        int[] myHit = new int[2];
-                        myHit[0] = p[0];
-                        myHit[1] = i;
-                        nextDir = "D";
-                        nextPoint = myHit;
-                        return;
-                    }
-                }
-            }
-        }
-        if (board[p[0]][p[1]] == 3) {
-            if (dir.equals("U")) {
-                for (int i = p[0]; i >= 0; i--) { //check left
-                    if (board[i][p[1]] != 0) {
-                        int[] myHit = new int[2];
-                        myHit[0] = i;
-                        myHit[1] = p[1];
-                        nextDir = "L";
-                        nextPoint = myHit;
-                        return;
-                    }
-                }
-            }
-        }
-        if (board[p[0]][p[1]] == 4) {
-            if (dir.equals("U")) {
-                for (int i = p[0]; i < 5; i++) { //check right
-                    if (board[i][p[1]] != 0) {
-                        int[] myHit = new int[2];
-                        myHit[0] = i;
-                        myHit[1] = p[1];
-                        nextDir = "R";
-                        nextPoint = myHit;
-                        return;
-                    }
-                }
-            }
-        }
-        if (board[p[0]][p[1]] == 4) {
-            if (dir.equals("L")) {
-                for (int i = p[1]; i < 5; i++) { //check down
-                    if (board[p[0]][i] != 0) {
-                        int[] myHit = new int[2];
-                        myHit[0] = p[0];
-                        myHit[1] = i;
-                        nextDir = "D";
-                        nextPoint = myHit;
-                        return;
-                    }
-                }
-            }
-        }
-        failCheck = true;
-        return;
-    }
-     */
 }

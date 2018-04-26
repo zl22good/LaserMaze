@@ -18,10 +18,10 @@ import java.awt.Image;
 
 /**
  *
- * @author Mike
+ * @author Mike, Zach, Luis, Cassie, Grace
  */
-public class WinBlock extends GameObject {
-
+public class WinBlock extends GameObject 
+{
     Image s_tar;
     String pathtar = (dir + "\\lasermaze\\hitwin.png");
     Image s_R;
@@ -35,8 +35,15 @@ public class WinBlock extends GameObject {
     boolean addPoint = false;
     boolean active = false;
 
-    public WinBlock(int myX, int myY,int w,int h) {
-
+    /**
+     * 
+     * @param myX
+     * @param myY
+     * @param w
+     * @param h 
+     */
+    public WinBlock(int myX, int myY,int w,int h) 
+    {
         s_tar = new ImageIcon(pathtar).getImage();
 
         x = myX;
@@ -47,59 +54,101 @@ public class WinBlock extends GameObject {
         smallmask =  new Rectangle2D.Double(x,y,hitboxWidth,hitboxHeight);
         startx = myX;
         starty = myY;
-        //yoffset = 25;
     }
 
-    public void clicked() {
+    /**
+     * 
+     */
+    public void clicked() 
+    {
     }
 
-    public void rClicked() {
+    /**
+     * 
+     */
+    public void rClicked() 
+    {
     }
 
-    public String toString() {
-        if (!active) {
+    /**
+     * 
+     * @return 
+     */
+    public String toString() 
+    {
+        if (!active) 
+        {
             return "VIRGIN";
-        } else {
+        } 
+        else 
+        {
             return "OOF";
         }
     }
 
-    public void colEvent() {
+    /**
+     * 
+     */
+    public void colEvent() 
+    {
         active = false;
         
-        for (GameObject curr : cols) {
-            if (curr instanceof MirrorBlock) {
-                if (((MirrorBlock)curr).goal){
+        for (GameObject curr : cols) 
+        {
+            if (curr instanceof MirrorBlock) 
+            {
+                if (((MirrorBlock)curr).goal)
+                {
                     active = true;
                 }
             }
-            
-
-        }
-        for (GameObject curr : cols) {
-            if (active){
-            if (curr instanceof Laser) {
-                addPoint = true;
-            }
-            }
         }
         
+        for (GameObject curr : cols) 
+        {
+            if (active)
+            {
+                if (curr instanceof Laser) 
+                {
+                    addPoint = true;
+                }
+            }
+        }
     }
 
-    public int getID() {
+    /**
+     * 
+     * @return 
+     */
+    public int getID() 
+    {
         return ID;
     }
 
-    public void setID(int i) {
+    /**
+     * 
+     * @param i 
+     */
+    public void setID(int i) 
+    {
         ID = i;
     }
-
-    public boolean isHit() {
+    
+    /**
+     * 
+     * @return 
+     */
+    public boolean isHit() 
+    {
         return HIT;
     }
 
-    public void setHit(boolean h) {
+    /**
+     * 
+     * @param h 
+     */
+    public void setHit(boolean h) 
+    {
         HIT = h;
     }
-
 }

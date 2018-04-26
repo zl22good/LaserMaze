@@ -17,10 +17,10 @@ import java.awt.Image;
 
 /**
  *
- * @author Mike
+ * @author Mike, Zach, Luis, Cassie, Grace
  */
-public class MirrorBlock extends GameObject {
-
+public class MirrorBlock extends GameObject 
+{
     Image s_UL;
     String pathUL = (dir + "\\lasermaze\\mirrorUL.png");
     Image s_ULb;
@@ -54,36 +54,58 @@ public class MirrorBlock extends GameObject {
     String pathRD = (dir + "\\lasermaze\\tarD.png");
     String pathRU = (dir + "\\lasermaze\\tarU.png");
     String pathRR = (dir + "\\lasermaze\\tarR.png");
-    
-    
 
+    /**
+     * 
+     */
     public MirrorBlock(){}
 
-    public MirrorBlock(int myX, int myY, String d, boolean l,int myID, boolean isWin, int winDir) {
-        if (!l){
-        s_UL = new ImageIcon(pathUL).getImage();
-        s_UR = new ImageIcon(pathUR).getImage();
-        s_DL = new ImageIcon(pathDL).getImage();
-        s_DR = new ImageIcon(pathDR).getImage();
+    /**
+     * 
+     * @param myX
+     * @param myY
+     * @param d
+     * @param l
+     * @param myID
+     * @param isWin
+     * @param winDir 
+     */
+    public MirrorBlock(int myX, int myY, String d, boolean l,int myID, 
+            boolean isWin, int winDir) 
+    {
+        if (!l)
+        {
+            s_UL = new ImageIcon(pathUL).getImage();
+            s_UR = new ImageIcon(pathUR).getImage();
+            s_DL = new ImageIcon(pathDL).getImage();
+            s_DR = new ImageIcon(pathDR).getImage();
         }
-        else{
-        s_DR = new ImageIcon(pathDRb).getImage();
-        s_UR= new ImageIcon(pathURb).getImage();
-        s_DL = new ImageIcon(pathDLb).getImage();
-        s_UL = new ImageIcon(pathULb).getImage();
+        else
+        {
+            s_DR = new ImageIcon(pathDRb).getImage();
+            s_UR= new ImageIcon(pathURb).getImage();
+            s_DL = new ImageIcon(pathDLb).getImage();
+            s_UL = new ImageIcon(pathULb).getImage();
         }
         sprite_index = s_UL;
-
-
-            if (d.equals("UR")) {
-                sprite_index = s_UR;
-            } else if (d.equals("DR")) {
-                sprite_index = s_DR;
-            } else if (d.equals("UL")) {
-                sprite_index = s_UL;
-            } else if (d.equals("DL")) {
-                sprite_index = s_DL;
-            }
+        
+        if (d.equals("UR")) 
+        {
+            sprite_index = s_UR;
+        } 
+        else if (d.equals("DR")) 
+        {
+            sprite_index = s_DR;
+            
+        } 
+        else if (d.equals("UL"))
+        {
+            sprite_index = s_UL;
+        } 
+        else if (d.equals("DL")) 
+        {
+            sprite_index = s_DL;
+        }
         
         x = myX;
         y = myY;
@@ -94,98 +116,137 @@ public class MirrorBlock extends GameObject {
         locked = l;
         startx = myX;
         starty = myY;
-        //yoffset = 25;
         ID = myID;
         myString = d;
         
-       //if (isWin){
-        //   goal = true;
-        //   goalDir = winDir;
-       // }
+        goal = isWin;
        
-       goal = isWin;
-       
-      retL = new ImageIcon(pathRL).getImage();
+        retL = new ImageIcon(pathRL).getImage();
         retR = new ImageIcon(pathRR).getImage();
         retU = new ImageIcon(pathRU).getImage();
         retD = new ImageIcon(pathRD).getImage();
         
         if (sprite_index == s_DL)
+        {
             goalDir = 2;
+        }
         if (sprite_index == s_DR)
+        {
             goalDir = 1;
+        }
         if (sprite_index == s_UR)
+        {
             goalDir = 1;
+        }
         if (sprite_index == s_UL)
+        {
             goalDir = 2;
+        }
         
-        if (goal){
-            if (goalDir ==1){
+        if (goal)
+        {
+            if (goalDir ==1)
+            {
                 topSpr = retL;
             }
-            if (goalDir ==2){
+            if (goalDir ==2)
+            {
                 topSpr = retR;
             }
-            if (goalDir ==3){
+            if (goalDir ==3)
+            {
                 topSpr = retU;
             }
-            if (goalDir ==4){
+            if (goalDir ==4)
+            {
                 topSpr = retD;
             }
         }
-        
     }
 
-    public void clicked() {
-        if (!inTransit) {
-            if (!selected) {
-               if (!goal){
-                playSound(snd_spin, false);
+    public void clicked() 
+    {
+        if (!inTransit) 
+        {
+            if (!selected) 
+            {
+               if (!goal)
+               {
+                    playSound(snd_spin, false);
 
-                if (sprite_index == s_DR) {
-                    sprite_index = s_DL;
-                } else if (sprite_index == s_DL) {
-                    sprite_index = s_UL;
-                } else if (sprite_index == s_UL) {
-                    sprite_index = s_UR;
-                } else if (sprite_index == s_UR) {
-                    sprite_index = s_DR;
+                    if (sprite_index == s_DR) 
+                    {
+                        sprite_index = s_DL;
+                    } 
+                    else if (sprite_index == s_DL) 
+                    {
+                        sprite_index = s_UL;
+                    } 
+                    else if (sprite_index == s_UL) 
+                    {
+                        sprite_index = s_UR;
+                    } 
+                    else if (sprite_index == s_UR) 
+                    {
+                        sprite_index = s_DR;
+                    }
                 }
-                }
+               
                 if (sprite_index == s_DL)
-            goalDir = 2;
-        if (sprite_index == s_DR)
-            goalDir = 1;
-        if (sprite_index == s_UR)
-            goalDir = 1;
-        if (sprite_index == s_UL)
-            goalDir = 2;
+                {
+                     goalDir = 2;
+                }
+                if (sprite_index == s_DR)
+                {
+                     goalDir = 1;
+                }
+                if (sprite_index == s_UR)
+                {
+                     goalDir = 1;
+                }
+                if (sprite_index == s_UL)
+                {
+                     goalDir = 2;
+                }
         
-        if (goal){
-            if (goalDir ==1){
-                topSpr = retL;
-            }
-            if (goalDir ==2){
-                topSpr = retR;
-            }
-            if (goalDir ==3){
-                topSpr = retU;
-            }
-            if (goalDir ==4){
-                topSpr = retD;
-            }
-        }
+                if (goal)
+                {
+                    if (goalDir ==1)
+                    {
+                        topSpr = retL;
+                    }
+                    if (goalDir ==2)
+                    {
+                        topSpr = retR;
+                    }
+                    if (goalDir ==3)
+                    {
+                        topSpr = retU;
+                    }
+                    if (goalDir ==4)
+                    {
+                        topSpr = retD;
+                    }
+                }
             }
 
-            }
         }
+    }
     
-
-    public void rClicked() {
+    /**
+     * 
+     */
+    public void rClicked() 
+    {
         playSound(snd_lift, false);
     }
 
-    public String toString() {
+    /**
+     * 
+     * @return 
+     */
+    public String toString() 
+    {
         String s = "";
         if (HIT)
         s = "HIT";
@@ -194,47 +255,79 @@ public class MirrorBlock extends GameObject {
         return s;
     }
 
-    public void colEvent() {
-        for (GameObject curr : cols) {
-            if (curr instanceof Laser) {
+    /**
+     * 
+     */
+    public void colEvent() 
+    {
+        for (GameObject curr : cols) 
+        {
+            if (curr instanceof Laser) 
+            {
                 HIT = true;
             }
         }
-        
-        
-
     }
     
-    public int getID(){
+    /**
+     * 
+     * @return 
+     */
+    public int getID()
+    {
         return ID;
     }
     
-    public void setID(int i){
+    /**
+     * 
+     * @param i 
+     */
+    public void setID(int i)
+    {
         ID = i;
     }
     
-    public boolean isHit(){
+    /**
+     * 
+     * @return 
+     */
+    public boolean isHit()
+    {
         return HIT;
     }
     
-    public void setHit(boolean h){
+    /**
+     * 
+     * @param h 
+     */
+    public void setHit(boolean h)
+    {
         HIT = h;
     }
     
-    public int myNumber(){
-        if (sprite_index == s_UL){
-        return 1;
-    }
-        if (sprite_index == s_UR){
-        return 2;
-    }
-        if (sprite_index == s_DL){
-        return 3;
-    }
-        if (sprite_index == s_DR){
-        return 4;
-    }
+    /**
+     * 
+     * @return 
+     */
+    public int myNumber()
+    {
+        if (sprite_index == s_UL)
+        {
+            return 1;
+        }
+        if (sprite_index == s_UR)
+        {
+            return 2;
+        }
+        if (sprite_index == s_DL)
+        {
+            return 3;
+        }
+        if (sprite_index == s_DR)
+        {
+            return 4;
+        }
+        
         return 10;
     }
-
 }

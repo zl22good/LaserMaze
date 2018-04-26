@@ -9,19 +9,22 @@ import java.awt.geom.Rectangle2D;
 import javax.swing.ImageIcon;
 /**
  *
- * @author Mike
+ * @author Mike, Zach, Luis, Cassie, Grace
  */
-public class EndGameText extends GameObject{
-    
+public class EndGameText extends GameObject
+{
     String bg_win = dir + "\\lasermaze\\victory.wav";
     String bg_lose = dir + "\\lasermaze\\lose.wav";
     Image s_win;
     Image s_lose;
     String pathW = (dir + "\\lasermaze\\win.png");
     String pathL = (dir + "\\lasermaze\\failed.png");
-    
-    
-    public EndGameText(){
+   
+    /**
+     * 
+     */
+    public EndGameText()
+    {
         x= 0;
         y = 233;
         visible = false;
@@ -30,19 +33,42 @@ public class EndGameText extends GameObject{
         sprite_index = s_lose;
     }
     
+    /**
+     * 
+     */
     public void clicked(){}
+    
+    /**
+     * 
+     * @return 
+     */
     public String toString(){return x+ " " + y;}
+    
+    /**
+     * 
+     */
     public void colEvent(){}
+    
+    /**
+     * 
+     */
     public void rClicked(){}
     
-    public void setVis(boolean s, boolean win){
-    visible = s;
-    if (win){
-        sprite_index = s_win;
+    /**
+     * 
+     * @param s
+     * @param win 
+     */
+    public void setVis(boolean s, boolean win)
+    {
+        visible = s;
+        if (win)
+        {
+            sprite_index = s_win;
+        }
+        else
+        {
+            sprite_index = s_lose;
+        }
     }
-    else
-        sprite_index = s_lose;
-    }
-    
-    
 }

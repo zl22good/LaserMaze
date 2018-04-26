@@ -11,10 +11,10 @@ import javax.swing.ImageIcon;
 
 /**
  *
- * @author Mike
+ * @author Mike, Zach, Luis, Cassie, Grace
  */
-public class SplitMirror extends GameObject{
-    
+public class SplitMirror extends GameObject
+{
     Image s_L;
     String pathL = (dir + "\\lasermaze\\splitL.png");
     Image s_R;
@@ -26,8 +26,13 @@ public class SplitMirror extends GameObject{
     String myString;
     String createNew = "";
     
-public SplitMirror(int myX, int myY){
-
+    /**
+     * 
+     * @param myX
+     * @param myY 
+     */
+    public SplitMirror(int myX, int myY)
+    {
         s_L = new ImageIcon(pathL).getImage();
         s_R = new ImageIcon(pathR).getImage();
        
@@ -41,70 +46,119 @@ public SplitMirror(int myX, int myY){
         smallmask =  new Rectangle2D.Double(x,y,hitboxWidth,hitboxHeight);
         startx = myX;
         starty = myY;
-        //yoffset = 25;
-
     }
 
-    public void clicked() {
-        if (!inTransit) {
-            if (!selected) {
+    /**
+     * 
+     */
+    public void clicked() 
+    {
+        if (!inTransit) 
+        {
+            if (!selected) 
+            {
                 playSound(snd_spin, false);
 
-                if (sprite_index == s_R) {
+                if (sprite_index == s_R) 
+                {
                     sprite_index = s_L;
-                } else if (sprite_index == s_L) {
+                } 
+                else if (sprite_index == s_L) 
+                {
                     sprite_index = s_R;
-
                 }
             }
         }
     }
 
-    public void rClicked() {
+    /**
+     * 
+     */
+    public void rClicked() 
+    {
         playSound(snd_lift, false);
     }
 
-    public String toString() {
-       if (HIT){
+    /**
+     * 
+     * @return 
+     */
+    public String toString() 
+    {
+       if (HIT)
+       {
            return "oof " + createNew; 
        }
        else
+       {
            return "wait no " + createNew;
+       }
     }
 
-    public void colEvent() {
-        for (GameObject curr : cols) {
-            if (curr instanceof Laser) {
-               
+    /**
+     * 
+     */
+    public void colEvent() 
+    {
+        for (GameObject curr : cols) 
+        {
+            if (curr instanceof Laser) 
+            {
                 HIT = true;
             }
         }
     }
 
-    public int getID() {
+    /**
+     * 
+     * @return 
+     */
+    public int getID() 
+    {
         return ID;
     }
 
-    public void setID(int i) {
+    /**
+     * 
+     * @param i 
+     */
+    public void setID(int i) 
+    {
         ID = i;
     }
 
-    public boolean isHit() {
+    /**
+     * 
+     * @return 
+     */
+    public boolean isHit() 
+    {
         return HIT;
     }
 
-    public void setHit(boolean h) {
+    /**
+     * 
+     * @param h 
+     */
+    public void setHit(boolean h) 
+    {
         HIT = h;
     }
 
-    public int myNumber() {
-        if (sprite_index == s_L) {
+    /**
+     * 
+     * @return 
+     */
+    public int myNumber() 
+    {
+        if (sprite_index == s_L) 
+        {
             return 1;
         }
-        if (sprite_index == s_R) {
+        if (sprite_index == s_R) 
+        {
             return 2;
         }
         return 0;
     }
-
 }

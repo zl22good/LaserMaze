@@ -14,17 +14,22 @@ import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 /**
  *
- * @author Mike
+ * @author Mike, Zach, Luis, Cassie, Grace
  */
-public class FireButton extends GameObject{
+public class FireButton extends GameObject
+{
     String bg_music = dir + "\\lasermaze\\bg.wav";
     Image s_firebutton;
     String pathFB = (dir + "\\lasermaze\\firebutton.png");
     String snd_blip = (dir+ "\\lasermaze\\blip.wav");
     
-    
-    public FireButton(int myX, int myY){
-        //playSound(bg_music,true);             //***************BGM*************
+    /**
+     * 
+     * @param myX
+     * @param myY 
+     */
+    public FireButton(int myX, int myY)
+    {
         s_firebutton = new ImageIcon(pathFB).getImage();
         sprite_index = s_firebutton;
         x = myX;
@@ -34,11 +39,27 @@ public class FireButton extends GameObject{
         mask =  new Rectangle2D.Double(x,y,hitboxWidth,hitboxHeight);
     }
     
-    public void clicked(){
+    /**
+     * 
+     */
+    public void clicked()
+    {
         playSound(snd_blip,false);
     }
-    public String toString(){return x+ " " + y;}
-    public void colEvent(){}
-    public void rClicked(){}
     
+    /**
+     * 
+     * @return 
+     */
+    public String toString(){return x+ " " + y;}
+    
+    /**
+     * 
+     */
+    public void colEvent(){}
+    
+    /**
+     * 
+     */
+    public void rClicked(){}
 }
