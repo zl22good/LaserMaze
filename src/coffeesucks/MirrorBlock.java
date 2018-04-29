@@ -56,7 +56,9 @@ public class MirrorBlock extends GameObject
     String pathRR = (dir + "\\lasermaze\\tarR.png");
 
     /**
-     * 
+     * reflects stuff. same as others, we have a direction and x an y
+     * however, since these are what win, we also have a 
+     * win direction
      */
     public MirrorBlock(){}
 

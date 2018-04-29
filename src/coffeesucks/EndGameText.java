@@ -10,6 +10,7 @@ import javax.swing.ImageIcon;
 /**
  *
  * @author Mike, Zach, Luis, Cassie, Grace
+ * this is basically a failed concept
  */
 public class EndGameText extends GameObject
 {

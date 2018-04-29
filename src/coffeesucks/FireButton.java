@@ -27,6 +27,7 @@ public class FireButton extends GameObject
      * 
      * @param myX
      * @param myY 
+     * fires the lazer! just a button
      */
     public FireButton(int myX, int myY)
     {

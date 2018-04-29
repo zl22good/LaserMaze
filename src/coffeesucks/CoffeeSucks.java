@@ -14,8 +14,6 @@ import javax.imageio.*;
 import java.io.File;
 import java.io.*;
 import javax.swing.ImageIcon;
-import java.util.Arrays;
-import java.awt.geom.Line2D;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
@@ -36,34 +34,34 @@ public class CoffeeSucks extends JPanel implements ActionListener,
     private int frameCount;
     static String dir = System.getProperty("user.dir");
     ArrayList<GameObject> objs = new ArrayList<>();
-    ArrayList<GameObject> titleobjs = new ArrayList<>();
-    ArrayList<GameObject> lv2objs = new ArrayList<>();
+    ArrayList<GameObject> titleobjs = new ArrayList<>(); //these hold objs
+    ArrayList<GameObject> lv2objs = new ArrayList<>(); //for the drawing
     Font customFont; 
     Font bigFont;
     ArrayList<int[]> points = new ArrayList<int[]>();
-    int[][] board = new int[5][5];
-    int[][] original_board = new int[5][5];
+    int[][] board = new int[5][5]; //the current board
+    int[][] original_board = new int[5][5]; //holds the board for resets
     int[] moveTo = new int[2];
     boolean hasSelected = false;
-    int numOfMirrors = 0;
-    String snd_slide = (dir + "\\lasermaze\\slide.wav");
-    boolean fired = false;
+    int numOfMirrors = 0; //used for UI
+    String snd_slide = (dir + "\\lasermaze\\slide.wav"); //initalizes sfx
+    boolean fired = false; //checks if you fired
     boolean failCheck = false;
     String nextDir;
     int[] nextPoint;
     boolean spitDebug;
     int numLaser;
-    boolean gameOver = false;
-    boolean gameWon = false;
+    boolean gameOver = false; //checks to see if you have lost
+    boolean gameWon = false; //checks to see if you have won
     JFrame currentFrame;
     String currentRoom = "";
     static CoffeeSucks mainObj;
     boolean hasPrompted = false;
     int score = 0;
-    int numTargets = 0;
+    int numTargets = 0; //how many targets are there?
     Image s_tar;
     String pathtar = (dir + "\\lasermaze\\hitwin.png");
-    String snd_win = (dir + "\\lasermaze\\victory.wav");
+    String snd_win = (dir + "\\lasermaze\\victory.wav"); //sounds 
     String snd_sd = (dir + "\\lasermaze\\sd.wav");
     boolean easterSD = false;
     
@@ -71,6 +69,7 @@ public class CoffeeSucks extends JPanel implements ActionListener,
      * 
      * @throws FontFormatException
      * @throws IOException 
+     * our main game instance
      */
     public CoffeeSucks() throws FontFormatException, IOException 
     {
@@ -146,12 +145,15 @@ public class CoffeeSucks extends JPanel implements ActionListener,
         }
 
     }
-   
+   /**
+    * 
+    */
     /**
      * 
      * @param args
      * @throws FontFormatException
      * @throws IOException 
+     * creates a game instance and runs it at the title screen
      */
     public static void main(String[] args) throws FontFormatException, 
             IOException 
@@ -163,7 +165,8 @@ public class CoffeeSucks extends JPanel implements ActionListener,
     }
 
     /**
-     * 
+     * this is our easy level room. Creates all of its objects and 
+     * puts them in the objs array to be drawn and collision checked
      */
     public void beginnerRoom() 
     {
@@ -293,7 +296,8 @@ public class CoffeeSucks extends JPanel implements ActionListener,
     }
     
     /**
-     * 
+     * this is the harder room
+     * uses lv2objs arraylist for drawing and collisions
      */
      public void interRoom() 
      {
@@ -431,7 +435,7 @@ public class CoffeeSucks extends JPanel implements ActionListener,
     }
 
      /**
-      * 
+      * uses titleobjs. This is basically the title screen
       */
      public void titleScreen() 
      {
@@ -480,7 +484,7 @@ public class CoffeeSucks extends JPanel implements ActionListener,
     }
     
      /**
-      * 
+      * draws everything based on object arrays for each "room"
       * @param g 
       */
     @Override
@@ -820,7 +824,8 @@ public class CoffeeSucks extends JPanel implements ActionListener,
     }
 
     /**
-     * 
+     * handles almost everything in the game
+     * collision checks objects using contains method
      * @param e 
      */
     public void mouseClicked(MouseEvent e) 
@@ -1845,7 +1850,8 @@ public class CoffeeSucks extends JPanel implements ActionListener,
     }
 
     /**
-     * 
+     * gives ID numbers based on locations.
+     * Kinda redundant, but ultimately useful
      * @param ID
      * @return 
      */

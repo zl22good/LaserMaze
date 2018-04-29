@@ -21,36 +21,37 @@ import java.io.*;
  */
 abstract class GameObject 
 {
-    int x = 0;
+    int x = 0; //loaction
     int y = 0;
-    int gravity;
-    double vspeed = 0;
+    int gravity; //not used
+    double vspeed = 0; //movement speeds
     double hspeed = 0;
-    Image sprite_index = null;
-    boolean inTransit = false;
+    Image sprite_index = null; //what do i look like?
+    boolean inTransit = false; //am I moving?
     int nextx;
     int nexty;
     int hitboxWidth;
-    int hitboxHeight;
+    int hitboxHeight; //creates hitbox
     public String dir = System.getProperty("user.dir");
     //double scale = 1;
     boolean colUp = false;
     boolean colDown = false;
-    boolean colRight = false;
+    boolean colRight = false; //not used
     boolean colLeft = false;
-    ArrayList<GameObject> cols = new ArrayList<GameObject>();
+    ArrayList<GameObject> cols = new ArrayList<GameObject>(); //collision 
+    //checking
     ArrayList<GameObject> smallcols = new ArrayList<GameObject>();
     boolean visible = true;
     String debugData;
     int widthX;
     int heightY;
-    Rectangle2D.Double mask;
+    Rectangle2D.Double mask; //hitbox
     Rectangle2D.Double smallmask;
     Boolean hasPlayedSFX = false; 
     boolean locked = false;
     int mySpeed;
     boolean selected = false;
-    int startx;
+    int startx; //these are throaways 
     int starty;
     int xoffset = 0;
     int yoffset = 0;
@@ -59,7 +60,7 @@ abstract class GameObject
     Image topSpr;
 
     /**
-     * 
+     * jumps to x
      * @param newX 
      */
     public void jumpX(int newX) 
@@ -68,7 +69,7 @@ abstract class GameObject
     }
 
     /**
-     * 
+     * jumps to y
      * @param newY 
      */
     public void jumpY(int newY) 
@@ -77,7 +78,7 @@ abstract class GameObject
     }
 
     /**
-     * 
+     * sets vertical speed
      * @param spd 
      */
     public void setVSpeed(double spd) 
@@ -86,7 +87,7 @@ abstract class GameObject
     }
 
     /**
-     * 
+     * sets horizontal speed
      * @param spd 
      */
     public void setHSpeed(double spd) 
@@ -95,7 +96,7 @@ abstract class GameObject
     }
 
     /**
-     * 
+     * set my image
      * @param spr 
      */
     public void setSpriteIndex(Image spr) 
@@ -107,7 +108,7 @@ abstract class GameObject
     }
 
     /**
-     * 
+     * go to new x and y at speed
      * @param newx
      * @param newy
      * @param speed 
@@ -139,7 +140,7 @@ abstract class GameObject
     }
 
     /**
-     * 
+     * have i reached my destination?
      */
     public void tripCheck() 
     {
@@ -164,7 +165,7 @@ abstract class GameObject
     }
 
     /**
-     * 
+     * am i hitting 
      * @param x1
      * @param y1
      * @return 
@@ -192,7 +193,7 @@ abstract class GameObject
     }
 
     /**
-     * 
+     * runs every 60th if a second
      */
     public void step() 
     {
@@ -218,7 +219,7 @@ abstract class GameObject
     }
 
     /**
-     * 
+     * checks all colisions in the input array
      * @param feedme
      * @return cols
      */
@@ -236,7 +237,7 @@ abstract class GameObject
     
     
     /**
-     * 
+     * placeholder
      * @param feedme
      * @return smallcols
      */
@@ -254,13 +255,13 @@ abstract class GameObject
     }
     
     /**
-     * 
+     * whta do i do when i hit
      */
     
     public abstract void colEvent();
     
     /**
-     * 
+     * make me invisible
      */
     public void switchVisible()
     {
@@ -275,7 +276,7 @@ abstract class GameObject
     }
     
     /**
-     * 
+     * plays the sound string input and may loop
      * @param soundfile
      * @param loop 
      */

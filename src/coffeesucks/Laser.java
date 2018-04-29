@@ -36,7 +36,7 @@ public class Laser extends GameObject
     int colY = 0;
 
     /**
-     * 
+     * simple, draws a lazer at x y with the h and v speeds
      * @param myX
      * @param myY
      * @param H

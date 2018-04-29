@@ -24,7 +24,8 @@ public class LevelSelect extends GameObject
     int level;
     
     /**
-     * 
+     * blocks to draw a level. x and y are loacation, levelNum is the level
+     * //tied to it
      * @param myX
      * @param myY
      * @param levelNum 

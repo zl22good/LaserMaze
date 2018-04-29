@@ -30,7 +30,7 @@ public class DoubleMirror extends GameObject
     String myString;
 
     /**
-     * 
+     * give it an x y and direction.
      * @param myX
      * @param myY
      * @param d

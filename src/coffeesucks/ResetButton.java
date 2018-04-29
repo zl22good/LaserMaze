@@ -21,7 +21,8 @@ public class ResetButton extends GameObject
     String snd_reset = (dir+ "\\lasermaze\\reset.wav");
     
     /**
-     * 
+     * the brings it all b b b b b b ack
+     * x y are the location
      * @param myX
      * @param myY 
      */

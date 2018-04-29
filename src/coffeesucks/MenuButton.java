@@ -21,7 +21,7 @@ public class MenuButton extends GameObject
     String pathb1 = (dir + "\\lasermaze\\menu.png");
 
     /**
-     * 
+     * bring me back to menu if i click at x y
      * @param myX
      * @param myY 
      */

@@ -12,6 +12,7 @@ import javax.swing.ImageIcon;
 /**
  *
  * @author Mike, Zach, Luis, Cassie, Grace
+ * draws an expolsion at x y
  */
 public class Explosion extends GameObject
 {

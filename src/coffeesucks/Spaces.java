@@ -24,7 +24,7 @@ public class Spaces extends GameObject
     int ID;
     
     /**
-     * 
+     * info about the spaces with an x and y
      * @param myX
      * @param myY
      * @param myID 

@@ -17,7 +17,8 @@ import java.awt.Image;
 import java.awt.Image;
 
 /**
- *
+ *checks for win hits at x and y
+ * basically a hit box
  * @author Mike, Zach, Luis, Cassie, Grace
  */
 public class WinBlock extends GameObject 

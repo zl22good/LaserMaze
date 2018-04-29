@@ -27,7 +27,8 @@ public class SplitMirror extends GameObject
     String createNew = "";
     
     /**
-     * 
+     * s mirror that splits the beam
+     * x and y are location
      * @param myX
      * @param myY 
      */

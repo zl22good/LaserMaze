@@ -20,7 +20,7 @@ public class MetaEasterEgg extends GameObject
     String pathb1 = (dir + "\\lasermaze\\meta.png");
    
     /**
-     * 
+     * shhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh
      * @param myX
      * @param myY 
      */

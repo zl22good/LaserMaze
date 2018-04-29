@@ -27,6 +27,9 @@ public class BoundingBox extends GameObject
      * @param y1
      * @param xw
      * @param yh 
+     * These are used as hitboxes
+     * for the sides of the play area
+     * give them an x and y and then a width and height
      */
     public BoundingBox(int x1, int y1, int xw, int yh)
     {

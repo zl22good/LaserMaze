@@ -40,7 +40,7 @@ public class LaserBlock extends GameObject
     int ID = 0;
     
     /**
-     * 
+     * fires a lazer, x and y give it a location and d is direction
      * @param myX
      * @param myY
      * @param d
